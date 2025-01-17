@@ -2,21 +2,21 @@ spring:
   application:
     name:
       gateway
-    cloud:
-      gateway:
-        routes:
-        - id: Service1-service-route # need to make this/ update this
-          uri: lb://Service1-service
-          predicates:
-          - Path=/Service1/**
-        - id: Service2-service-route # need to make this/ update this
-          uri: lb://Service2-service
-          predicates:
-          - Path=/Service2/**
-        - id: Service3-service-route # need to make this/ update this
-          uri: lb://Service3-service
-          predicates:
-          - Path=/Service3/**
+  cloud:
+    gateway:
+      routes:
+      - id: squadron-service-route
+        uri: lb://squadron-service
+        predicates:
+        - Path=/Service1/**
+      - id: Service2-service-route # need to make this/ update this
+        uri: lb://Service2-service
+        predicates:
+        - Path=/Service2/**
+      - id: Service3-service-route # need to make this/ update this
+        uri: lb://Service3-service
+        predicates:
+        - Path=/Service3/**
 server:
   port: 9000
 
