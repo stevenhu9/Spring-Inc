@@ -1,9 +1,8 @@
 package com.Spring_inc.models;
 
-import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,14 +38,13 @@ public class Commander {
 	private String active_duty;
 	
 	// commander and Commander have a one to one relationship
-	@OneToOne
-	@JoinColumn(name = "squadron_id", referencedColumnName = "squadron_id")
-	@JsonIgnoreProperties("squadron_id")
-	private int squadronId;
+	//@OneToOne(mappedBy = "commander", cascade = CascadeType.ALL)
+	//@JsonIgnoreProperties("commander")
+	//private Squadron squadron;
 	
 	//constructor, getters, setters, and toString
 	public Commander(int CommanderId, String CommanderName, String Rank, int years_of_service, String Specialization,
-			String Active_duty, int SquadronId) {
+			String Active_duty) {
 		super();
 		this.commanderId = CommanderId;
 		this.fullName = CommanderName;
@@ -54,8 +52,6 @@ public class Commander {
 		this.YOS = years_of_service;
 		this.specialization = Specialization;
 		this.active_duty = Active_duty;
-
-		this.squadronId = SquadronId; // link to Commander
 	}
 
 	public int getCommanderId() {
@@ -106,19 +102,19 @@ public class Commander {
 		this.active_duty = ad;
 	}
 
-	public int getSquadronId() {
-		return squadronId;
-	}
+	//public int getSquadronId() {
+		//return squadronId;
+	//}
 
-	public void setSquadronId(int SquadronId) {
-		this.squadronId = SquadronId;
-	}
+	//public void setSquadronId(int SquadronId) {
+		//this.squadronId = SquadronId;
+	//}
 
 	@Override
 	public String toString() {
 		return "Commander [CommanderId=" + commanderId + ", CommanderName=" + fullName + ", Rank=" + rank
 				+ ", Years_Of_Service=" + YOS + ", Specialization=" + specialization + ", Active_duty=" + active_duty + ","
-						+ " SquadronId=" + squadronId + "]";
+						+ "]";
 	}
 	
 	

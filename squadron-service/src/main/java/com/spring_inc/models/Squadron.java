@@ -1,4 +1,4 @@
-package com.spring_inc.models;
+package com.Spring_inc.models;
 
 import java.sql.Timestamp;
 
@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+
 
 @Entity
 @Table(name = "squadron")
@@ -42,10 +44,10 @@ public class Squadron {
 	private String status;
 	
 	// commander and squadron have a one to one relationship
-	@OneToOne
-	@JoinColumn(name = "commander_id", referencedColumnName = "commander_id")
-	@JsonIgnoreProperties("commander_id")
-	private int commanderId;
+	//@OneToOne
+	//@JoinColumn(name = "commander", referencedColumnName = "commander_id")
+	//@JsonIgnoreProperties("commander")
+	//private Commander commander;
 	
 	//constructor, getters, setters, and toString
 	public Squadron(int squadronId, String squadronName, String base, Timestamp dateFormed, String mission,
@@ -58,7 +60,7 @@ public class Squadron {
 		this.mission = mission;
 		this.capacity = capacity;
 		this.status = status;
-		this.commanderId = commanderId;
+	//	this.commanderId = commanderId;
 	}
 
 	public int getSquadronId() {
@@ -117,19 +119,19 @@ public class Squadron {
 		this.status = status;
 	}
 
-	public int getCommanderId() {
-		return commanderId;
-	}
+	//public int getCommanderId() {
+	//	return commanderId;
+	//}
 
-	public void setCommanderId(int commanderId) {
-		this.commanderId = commanderId;
-	}
+	//public void setCommanderId(int commanderId) {
+	//	this.commanderId = commanderId;
+	//}
 
 	@Override
 	public String toString() {
 		return "Squadron [squadronId=" + squadronId + ", squadronName=" + squadronName + ", base=" + base
 				+ ", dateFormed=" + dateFormed + ", mission=" + mission + ", capacity=" + capacity + ", status="
-				+ status + ", commanderId=" + commanderId + "]";
+				+ status + "]";
 	}
 	
 	

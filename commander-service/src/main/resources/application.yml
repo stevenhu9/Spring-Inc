@@ -1,9 +1,16 @@
 spring:
- application:
-  name: commander-service
-
+  application:
+    name: commander-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/airforce
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_HIBERNATE_DDL}
 server:
- port: 8081
+ port: 8082
  
 eureka:
   client:

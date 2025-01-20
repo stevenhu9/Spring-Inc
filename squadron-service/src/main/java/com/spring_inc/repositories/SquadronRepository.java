@@ -1,8 +1,8 @@
-package com.spring_inc.repositories;
+package com.Spring_inc.repositories;
 
 import org.springframework.stereotype.Repository;
 
-import com.spring_inc.models.Squadron;
+import com.Spring_inc.models.Squadron;
 
 import org.springframework.data.repository.CrudRepository;
 

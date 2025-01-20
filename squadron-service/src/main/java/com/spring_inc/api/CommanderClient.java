@@ -1,0 +1,14 @@
+package com.Spring_inc.api;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@FeignClient(name = "commander-service")
+public interface CommanderClient {
+
+	@GetMapping("/menu/test")
+	public String getTest();
+	
+	//@PostMapping("/menu")
+	//public String getAssociatedFood(Map<String, Integer> menuItem);
+}

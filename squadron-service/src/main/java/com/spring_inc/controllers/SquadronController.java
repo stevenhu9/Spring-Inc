@@ -1,4 +1,4 @@
-	package com.spring_inc.controllers;
+package com.Spring_inc.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,24 +10,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Squadron;
-import com.spring_inc.services.SquadronService;
+import com.Spring_inc.api.CommanderClient;
+import com.Spring_inc.dtos.SquadronDTO;
+import com.Spring_inc.models.Squadron;
+import com.Spring_inc.services.SquadronService;
 
 	@RestController
 	@RequestMapping("/squadron")
 	public class SquadronController {
 		
-//		@GetMapping
-//		public String test() {
-//			return "works";
-//		}
+		@GetMapping("/test")
+		public String test() {
+			return "message comes from squadron controller";
+		}
 		
 		private SquadronService service;
+		private CommanderClient client;
 		
-		public SquadronController(SquadronService service) {
+		public SquadronController(SquadronService service,CommanderClient c) {
 			super();
 			this.service = service;
+			this.client = c;
 		}
 		
 		// find all
