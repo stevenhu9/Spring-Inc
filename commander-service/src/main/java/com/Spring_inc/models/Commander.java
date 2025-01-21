@@ -26,16 +26,16 @@ public class Commander {
 	private String fullName;
 	
 	@Column(name = "commander_rank")
-	private String rank;
+	private String commanderRank;
 	
 	@Column(name = "years_of_service")
-	private int YOS;
+	private int yearsOfService;
 	
 	@Column(name = "specialization")
 	private String specialization;
 	
 	@Column(name = "active_duty")
-	private String active_duty;
+	private String activeDuty;
 	
 	// commander and Commander have a one to one relationship
 	//@OneToOne(mappedBy = "commander", cascade = CascadeType.ALL)
@@ -46,15 +46,15 @@ public class Commander {
 	public Commander () {};
 	
 	//constructor, getters, setters, and toString
-	public Commander(int commanderId, String fullName, String rank, int years_of_service, String specialization,
-			String active_duty) {
+	public Commander(int commanderId, String fullName, String commanderRank, int yearsOfService, String specialization,
+			String activeDuty) {
 		super();
 		this.commanderId = commanderId;
 		this.fullName = fullName;
-		this.rank = rank;
-		this.YOS = years_of_service;
+		this.commanderRank = commanderRank;
+		this.yearsOfService = yearsOfService;
 		this.specialization = specialization;
-		this.active_duty = active_duty;
+		this.activeDuty = activeDuty;
 	}
 
 	public int getCommanderId() {
@@ -73,36 +73,36 @@ public class Commander {
 		this.fullName = CommanderName;
 	}
 
-	public String getRank() {
-		return rank;
+	public String getCommanderRank() {
+		return commanderRank;
 	}
 
-	public void setRank(String Rank) {
-		this.rank = Rank;
+	public void setCommanderRank(String commanderRank) {
+		this.commanderRank = commanderRank;
 	}
 
-	public int getYOS() {
-		return YOS;
+	public int getYearsOfService() {
+		return yearsOfService;
 	}
 
-	public void setYOS(int yos) {
-		this.YOS = yos;
+	public void setYearsOfService(int yearsOfService) {
+		this.yearsOfService = yearsOfService;
 	}
 
 	public String getSpecialization() {
 		return specialization;
 	}
 
-	public void setSpecialziation(String spec) {
-		this.specialization = spec;
+	public void setSpecialziation(String specialization) {
+		this.specialization = specialization;
 	}
 
 	public String getActiveDuty() {
-		return active_duty;
+		return activeDuty;
 	}
 
-	public void setActiveDuty(String ad) {
-		this.active_duty = ad;
+	public void setActiveDuty(String activeDuty) {
+		this.activeDuty= activeDuty;
 	}
 
 	//public int getSquadronId() {
@@ -115,8 +115,8 @@ public class Commander {
 
 	@Override
 	public String toString() {
-		return "Commander [CommanderId=" + commanderId + ", CommanderName=" + fullName + ", Rank=" + rank
-				+ ", Years_Of_Service=" + YOS + ", Specialization=" + specialization + ", Active_duty=" + active_duty + ","
+		return "Commander [CommanderId=" + commanderId + ", CommanderName=" + fullName + ", Rank=" + commanderRank
+				+ ", yearsOfService=" + yearsOfService + ", Specialization=" + specialization + ", ActiveDutyy=" + activeDuty + ","
 						+ "]";
 	}
 	

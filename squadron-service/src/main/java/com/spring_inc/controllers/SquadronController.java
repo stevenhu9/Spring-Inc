@@ -22,10 +22,10 @@ import com.spring_inc.services.SquadronService;
 		private SquadronService service;
 		private CommanderClient client;
 		
-		public SquadronController(SquadronService service,CommanderClient c) {
+		public SquadronController(SquadronService squadronService, CommanderClient commanderClient) {
 			super();
-			this.service = service;
-			this.client = c;
+			this.service = squadronService;
+			this.client = commanderClient;
 		}
 		
 		

@@ -25,34 +25,34 @@ public class CommanderService {
 	}
 	
 	// GET Commander by ID
-	public ResponseEntity<Commander> findById(int CommanderId) {
-		if (repo.existsById(CommanderId))
+	public ResponseEntity<Commander> findById(int commanderId) {
+		if (repo.existsById(commanderId))
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(repo.findById(CommanderId).get());
+								 .body(repo.findById(commanderId).get());
 		else
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 								 .body(null);
 	}
 	
 	// Create new Commander
-	public ResponseEntity<Commander> addOne(CommanderDTO CommanderDTO) {
+	public ResponseEntity<Commander> addOne(CommanderDTO commanderDTO) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-							 .body(repo.save(new Commander(0, CommanderDTO.getCommanderName(), CommanderDTO.getrank(), CommanderDTO.getyos(), CommanderDTO.getspecial(), CommanderDTO.getactiveduty())));
+							 .body(repo.save(new Commander(0, commanderDTO.getCommanderName(), commanderDTO.getCommanderRank(), commanderDTO.getYearsOfService(), commanderDTO.getSpecialization(), commanderDTO.getActiveDuty())));
 	}
 	
 	// Update existing Commander by ID
-	public ResponseEntity<Commander> updateOne(int CommanderId, CommanderDTO CommanderDTO) {
-		if (repo.existsById(CommanderId))
+	public ResponseEntity<Commander> updateOne(int commanderId, CommanderDTO commanderDTO) {
+		if (repo.existsById(commanderId))
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(repo.save(new Commander(0, CommanderDTO.getCommanderName(), CommanderDTO.getrank(), CommanderDTO.getyos(), CommanderDTO.getspecial(), CommanderDTO.getactiveduty())));
+								 .body(repo.save(new Commander(0, commanderDTO.getCommanderName(), commanderDTO.getCommanderRank(), commanderDTO.getYearsOfService(), commanderDTO.getSpecialization(), commanderDTO.getActiveDuty())));
 		else
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 								 .body(null);
 	}
 	
 	// Delete existing Commander
-	public ResponseEntity<Void> deleteOne(int CommanderId) {
-		repo.deleteById(CommanderId);
+	public ResponseEntity<Void> deleteOne(int commanderId) {
+		repo.deleteById(commanderId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
 							 .body(null);
 	}

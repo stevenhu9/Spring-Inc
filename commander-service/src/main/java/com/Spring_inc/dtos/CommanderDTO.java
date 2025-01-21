@@ -3,21 +3,21 @@ package com.Spring_inc.dtos;
 public class CommanderDTO {
 
 	private String commanderName;
-	private String rank;
-	private int yos;
-	private String special;
-	private String activeduty;
+	private String commanderRank;
+	private int yearsOfService;
+	private String specialization;
+	private String activeDuty;
 	//private int commanderId;
 	
 	
-	public CommanderDTO(String commanderName, String rank, String special, int yos,
-			String activeduty) {
+	public CommanderDTO(String commanderName, String commanderRank, String specialization, int yearsOfService,
+			String activeDuty) {
 		super();
 		this.commanderName = commanderName;
-		this.rank = rank;
-		this.special = special;
-		this.yos = yos;
-		this.activeduty = activeduty;
+		this.commanderRank = commanderRank;
+		this.specialization = specialization;
+		this.yearsOfService = yearsOfService;
+		this.activeDuty = activeDuty;
 		//this.commanderId = commanderId;
 	}
 	
@@ -27,36 +27,36 @@ public class CommanderDTO {
 	public void setCommanderName(String commanderName) {
 		this.commanderName = commanderName;
 	}
-	public String getrank() {
-		return rank;
+	public String getCommanderRank() {
+		return commanderRank;
 	}
-	public void setrank(String rank) {
-		this.rank = rank;
+	public void setcommanderRank(String commanderRank) {
+		this.commanderRank = commanderRank;
 	}
 	
-	public String getspecial() {
-		return special;
+	public String getSpecialization() {
+		return specialization;
 	}
-	public void setspecial(String special) {
-		this.special = special;
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
 	}
-	public int getyos() {
-		return yos;
+	public int getYearsOfService() {
+		return yearsOfService;
 	}
-	public void setyos(int yos) {
-		this.yos = yos;
+	public void setYearsOfService(int yearsOfService) {
+		this.yearsOfService = yearsOfService;
 	}
-	public String getactiveduty() {
-		return activeduty;
+	public String getActiveDuty() {
+		return activeDuty;
 	}
-	public void setactiveduty(String activeduty) {
-		this.activeduty = activeduty;
+	public void setActiveduty(String activeDuty) {
+		this.activeDuty = activeDuty;
 	}
 
 	@Override
 	public String toString() {
-		return "CommanderDTO [CommanderName=" + commanderName + ", rank=" + rank + ", "
-				+ "special=" + special + ", yos=" + yos + ", activeduty=" + activeduty + "]";
+		return "CommanderDTO [CommanderName=" + commanderName + ", rank=" + commanderRank + ", "
+				+ "specialization=" + specialization + ", yearsOfService=" + yearsOfService + ", activeDuty=" + activeDuty + "]";
 	}
 
 	//public int getCommanderId() {

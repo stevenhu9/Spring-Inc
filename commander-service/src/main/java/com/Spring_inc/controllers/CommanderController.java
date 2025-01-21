@@ -22,9 +22,9 @@ public class CommanderController {
 	private SquadronClient client;
 	private CommanderService service;
 	
-	public CommanderController(CommanderService commanderservice,SquadronClient squadronclient) {
-		this.client = squadronclient;
-		this.service = commanderservice;
+	public CommanderController(CommanderService commanderService,SquadronClient squadronClient) {
+		this.client = squadronClient;
+		this.service = commanderService;
 	}
 	
 	// find all
