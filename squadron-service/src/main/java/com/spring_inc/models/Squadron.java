@@ -49,6 +49,9 @@ public class Squadron {
 	//@JsonIgnoreProperties("commander")
 	//private Commander commander;
 	
+	@Column(name = "commanderId")
+	private int commanderId;
+	
 	//constructor, getters, setters, and toString
 	public Squadron(int squadronId, String squadronName, String base, Timestamp dateFormed, String mission,
 			int capacity, String status, int commanderId) {
@@ -60,7 +63,7 @@ public class Squadron {
 		this.mission = mission;
 		this.capacity = capacity;
 		this.status = status;
-	//	this.commanderId = commanderId;
+		this.commanderId = commanderId;
 	}
 
 	public int getSquadronId() {
@@ -119,13 +122,13 @@ public class Squadron {
 		this.status = status;
 	}
 
-	//public int getCommanderId() {
-	//	return commanderId;
-	//}
+	public int getCommanderId() {
+		return commanderId;
+	}
 
-	//public void setCommanderId(int commanderId) {
-	//	this.commanderId = commanderId;
-	//}
+	public void setCommanderId(int commanderId) {
+		this.commanderId = commanderId;
+	}
 
 	@Override
 	public String toString() {

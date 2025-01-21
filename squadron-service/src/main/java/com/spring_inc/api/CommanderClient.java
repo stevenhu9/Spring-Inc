@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(name = "commander-service")
 public interface CommanderClient {
 
-	@GetMapping("/menu/test")
+	@GetMapping("/commander/test")
 	public String getTest();
 	
 	//@PostMapping("/menu")

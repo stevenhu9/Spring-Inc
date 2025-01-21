@@ -32,6 +32,12 @@ public class CommanderController {
 	public ResponseEntity<Iterable<Commander>> findAll() {
 		return service.findAll();
 	}
+	
+	// get commander
+	@GetMapping("/test")
+	public String test() {
+		return "this message came from commander controller";
+	}
 			/*
 	// find one by ID
 	@GetMapping("/{CommanderId}")

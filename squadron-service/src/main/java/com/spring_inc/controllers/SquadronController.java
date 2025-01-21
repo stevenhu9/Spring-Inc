@@ -19,11 +19,6 @@ import com.Spring_inc.services.SquadronService;
 	@RequestMapping("/squadron")
 	public class SquadronController {
 		
-		@GetMapping("/test")
-		public String test() {
-			return "message comes from squadron controller";
-		}
-		
 		private SquadronService service;
 		private CommanderClient client;
 		
@@ -32,6 +27,13 @@ import com.Spring_inc.services.SquadronService;
 			this.service = service;
 			this.client = c;
 		}
+		
+		
+		@GetMapping("/test")
+		public String test() {
+			return client.getTest();
+		}
+		
 		
 		// find all
 		@GetMapping
@@ -61,5 +63,6 @@ import com.Spring_inc.services.SquadronService;
 		@DeleteMapping("/{squadronId}")
 		public ResponseEntity<Void> deleteOne(@PathVariable int squadronId) {
 			return service.deleteOne(squadronId);
-		}
+		} 
+		
 	}

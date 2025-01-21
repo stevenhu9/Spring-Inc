@@ -1,7 +1,5 @@
 package com.Spring_inc.dtos;
 
-import java.sql.Timestamp;
-
 public class CommanderDTO {
 
 	private String CommanderName;
