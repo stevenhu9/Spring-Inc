@@ -38,28 +38,28 @@ public class CommanderController {
 	public String test() {
 		return "this message came from commander controller";
 	}
-			/*
+		
 	// find one by ID
-	@GetMapping("/{CommanderId}")
-	public ResponseEntity<Commander> findById(@PathVariable int CommanderId) {
-		return service.findById(CommanderId);
+	@GetMapping("/{commanderId}")
+	public ResponseEntity<Commander> findById(@PathVariable int commanderId) {
+		return service.findById(commanderId);
 	}
 			
 	// add one
 	@PostMapping
-	public ResponseEntity<Commander> addOne(@RequestBody CommanderDTO CommanderDTO) {
-		return service.addOne(CommanderDTO);
+	public ResponseEntity<Commander> addOne(@RequestBody CommanderDTO commanderDTO) {
+		return service.addOne(commanderDTO);
 	}
 			
 	// update one
-	@PutMapping("/{CommanderId}")
-	public ResponseEntity<Commander> updateOne(@PathVariable int CommanderId, @RequestBody CommanderDTO CommanderDTO) {
-		return service.updateOne(CommanderId, CommanderDTO);
+	@PutMapping("/{commanderId}")
+	public ResponseEntity<Commander> updateOne(@PathVariable int commanderId, @RequestBody CommanderDTO commanderDTO) {
+		return service.updateOne(commanderId, commanderDTO);
 	}
 			
 	// delete one
-	@DeleteMapping("/{CommanderId}")
-	public ResponseEntity<Void> deleteOne(@PathVariable int CommanderId) {
-		return service.deleteOne(CommanderId);
-	}*/
+	@DeleteMapping("/{commanderId}")
+	public ResponseEntity<Void> deleteOne(@PathVariable int commanderId) {
+		return service.deleteOne(commanderId);
+	}
 }

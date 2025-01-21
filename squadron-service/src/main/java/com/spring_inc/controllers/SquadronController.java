@@ -1,4 +1,4 @@
-package com.Spring_inc.controllers;
+package com.spring_inc.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Spring_inc.api.CommanderClient;
-import com.Spring_inc.dtos.SquadronDTO;
-import com.Spring_inc.models.Squadron;
-import com.Spring_inc.services.SquadronService;
+import com.spring_inc.api.CommanderClient;
+import com.spring_inc.dtos.SquadronDTO;
+import com.spring_inc.models.Squadron;
+import com.spring_inc.services.SquadronService;
 
 	@RestController
 	@RequestMapping("/squadron")

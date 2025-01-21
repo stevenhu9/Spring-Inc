@@ -23,7 +23,7 @@ public class CommanderService {
 		return ResponseEntity.status(HttpStatus.OK)
 							 .body(repo.findAll());
 	}
-	/*
+	
 	// GET Commander by ID
 	public ResponseEntity<Commander> findById(int CommanderId) {
 		if (repo.existsById(CommanderId))
@@ -56,5 +56,5 @@ public class CommanderService {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
 							 .body(null);
 	}
-	*/
+
 }

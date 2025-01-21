@@ -25,13 +25,13 @@ public class Commander {
 	@Column(name = "full_name")
 	private String fullName;
 	
-	@Column(name = "rank")
+	@Column(name = "commander_rank")
 	private String rank;
 	
 	@Column(name = "years_of_service")
 	private int YOS;
 	
-	@Column(name = "Specialization")
+	@Column(name = "specialization")
 	private String specialization;
 	
 	@Column(name = "active_duty")
@@ -42,16 +42,19 @@ public class Commander {
 	//@JsonIgnoreProperties("commander")
 	//private Squadron squadron;
 	
+	// default constructor for Hibernate bean
+	public Commander () {};
+	
 	//constructor, getters, setters, and toString
-	public Commander(int CommanderId, String CommanderName, String Rank, int years_of_service, String Specialization,
-			String Active_duty) {
+	public Commander(int commanderId, String fullName, String rank, int years_of_service, String specialization,
+			String active_duty) {
 		super();
-		this.commanderId = CommanderId;
-		this.fullName = CommanderName;
-		this.rank = Rank;
+		this.commanderId = commanderId;
+		this.fullName = fullName;
+		this.rank = rank;
 		this.YOS = years_of_service;
-		this.specialization = Specialization;
-		this.active_duty = Active_duty;
+		this.specialization = specialization;
+		this.active_duty = active_duty;
 	}
 
 	public int getCommanderId() {

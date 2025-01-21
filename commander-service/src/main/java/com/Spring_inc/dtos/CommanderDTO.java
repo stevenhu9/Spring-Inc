@@ -2,7 +2,7 @@ package com.Spring_inc.dtos;
 
 public class CommanderDTO {
 
-	private String CommanderName;
+	private String commanderName;
 	private String rank;
 	private int yos;
 	private String special;
@@ -10,10 +10,10 @@ public class CommanderDTO {
 	//private int commanderId;
 	
 	
-	public CommanderDTO(String CommanderName, String rank, String special, int yos,
+	public CommanderDTO(String commanderName, String rank, String special, int yos,
 			String activeduty) {
 		super();
-		this.CommanderName = CommanderName;
+		this.commanderName = commanderName;
 		this.rank = rank;
 		this.special = special;
 		this.yos = yos;
@@ -22,10 +22,10 @@ public class CommanderDTO {
 	}
 	
 	public String getCommanderName() {
-		return CommanderName;
+		return commanderName;
 	}
-	public void setCommanderName(String CommanderName) {
-		this.CommanderName = CommanderName;
+	public void setCommanderName(String commanderName) {
+		this.commanderName = commanderName;
 	}
 	public String getrank() {
 		return rank;
@@ -55,7 +55,7 @@ public class CommanderDTO {
 
 	@Override
 	public String toString() {
-		return "CommanderDTO [CommanderName=" + CommanderName + ", rank=" + rank + ", "
+		return "CommanderDTO [CommanderName=" + commanderName + ", rank=" + rank + ", "
 				+ "special=" + special + ", yos=" + yos + ", activeduty=" + activeduty + "]";
 	}
 

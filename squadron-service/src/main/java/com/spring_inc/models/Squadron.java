@@ -1,4 +1,4 @@
-package com.Spring_inc.models;
+package com.spring_inc.models;
 
 import java.sql.Timestamp;
 
@@ -51,6 +51,9 @@ public class Squadron {
 	
 	@Column(name = "commanderId")
 	private int commanderId;
+	
+	// default constructor for Hibernate bean
+	public Squadron() {};
 	
 	//constructor, getters, setters, and toString
 	public Squadron(int squadronId, String squadronName, String base, Timestamp dateFormed, String mission,
