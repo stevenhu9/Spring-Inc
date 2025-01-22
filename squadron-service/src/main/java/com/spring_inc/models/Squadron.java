@@ -1,4 +1,4 @@
-package com.spring_inc.models;
+package com.Spring_inc.models;
 
 import java.sql.Timestamp;
 
@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
 
 
 @Entity

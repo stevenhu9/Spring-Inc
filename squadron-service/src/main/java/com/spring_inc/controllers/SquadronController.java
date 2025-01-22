@@ -1,4 +1,6 @@
-package com.spring_inc.controllers;
+package com.Spring_inc.controllers;
+
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring_inc.api.CommanderClient;
-import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Squadron;
-import com.spring_inc.services.SquadronService;
+import com.Spring_inc.api.CommanderClient;
+import com.Spring_inc.dtos.SquadronDTO;
+import com.Spring_inc.models.Squadron;
+import com.Spring_inc.services.SquadronService;
 
 	@RestController
 	@RequestMapping("/squadron")
@@ -27,13 +29,6 @@ import com.spring_inc.services.SquadronService;
 			this.service = squadronService;
 			this.client = commanderClient;
 		}
-		
-		
-		@GetMapping("/test")
-		public String test() {
-			return "test worked";
-		}
-		
 		
 		// find all
 		@GetMapping
@@ -63,6 +58,25 @@ import com.spring_inc.services.SquadronService;
 		@DeleteMapping("/{squadronId}")
 		public ResponseEntity<Void> deleteOne(@PathVariable int squadronId) {
 			return service.deleteOne(squadronId);
-		} 
+		}
 		
+		// get the commander of the squadron
+		@GetMapping("/commander/{squadronid}")
+		public ResponseEntity<Object[]> getCommander(@PathVariable int squadronid) {
+			return service.getCommander(squadronid);
+		}
+		
+		// get the pilots assigned to the squadron
+		@GetMapping("/pilot/{squadid}")
+		public ResponseEntity<List<Object[]>> getPilot(@PathVariable int squadid) {
+			return service.getPilot(squadid);
+		}
+		
+		// add a pilot to the squadron
+		@GetMapping("/addPilot/{pilotid}/{squadronid}")
+		public ResponseEntity<String> addPilot(@PathVariable int pilotid,@PathVariable int squadronid) {
+			return service.addPilot(pilotid, squadronid);
+		}
+		
+		//
 	}

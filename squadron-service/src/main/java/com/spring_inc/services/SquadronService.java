@@ -1,12 +1,14 @@
-package com.spring_inc.services;
+package com.Spring_inc.services;
+
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Squadron;
-import com.spring_inc.repositories.SquadronRepository;
+import com.Spring_inc.dtos.SquadronDTO;
+import com.Spring_inc.models.Squadron;
+import com.Spring_inc.repositories.SquadronRepository;
 
 @Service
 public class SquadronService {
@@ -55,5 +57,31 @@ public class SquadronService {
 		repo.deleteById(squadronId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
 							 .body(null);
+		// when squadrons are deleted, set it up so that each pilot in the squadron has their squadron_id set to -1
+	}
+	
+	// get the commander of the squadron
+	public ResponseEntity<Object[]> getCommander(int squadronid){
+		int commanderid = repo.getCommanderID(squadronid);
+		return ResponseEntity.status(HttpStatus.OK).body(repo.getCommander(commanderid));
+		// error handeling for invalid squadron id
+	}
+	
+	// get a list of the pilots assigned to the squadron
+	public ResponseEntity<List<Object[]>> getPilot(int squadid) {
+		return ResponseEntity.status(HttpStatus.OK).body(repo.getPilot(squadid));
+		// add error handeling for invalid squadron id
+	}
+	
+	// add a pilot to the squadron, returns string to user letting them know if it worked
+	public ResponseEntity<String> addPilot(int pilotid, int squadronid) {
+		int currentcapacity = repo.checkCapacity(squadronid);
+		if(currentcapacity <= 7) {
+			repo.addPilot(squadronid, pilotid);
+			return ResponseEntity.status(HttpStatus.OK).body("Pilot has been added to the squad");
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("The squadron is full, cannot add pilot");
+		}
 	}
 }

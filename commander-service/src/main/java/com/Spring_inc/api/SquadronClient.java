@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface SquadronClient {
 	
 	@GetMapping("/squadron/commander")
-	public String getAssociatedSquadron(Integer squadronID);
+	public String getCommander(Integer commanderID);
 }

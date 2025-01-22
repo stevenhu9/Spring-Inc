@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.spring-inc</groupId>
-	<artifactId>squadron-service</artifactId>
+	<artifactId>pilot-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>squadron-service</name>
-	<description>The Squadron Service Server for our Airforce MS</description>
+	<name>pilot-service</name>
+	<description>The Pilot Service Server for our Airforce MS</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -57,9 +57,15 @@ public class CommanderController {
 		return service.updateOne(commanderId, commanderDTO);
 	}
 			
-	// delete one
+	// delete a commander with no squad/pilots assigned to it
 	@DeleteMapping("/{commanderId}")
-	public ResponseEntity<Void> deleteOne(@PathVariable int commanderId) {
+	public ResponseEntity<String> deleteOne(@PathVariable int commanderId) {
 		return service.deleteOne(commanderId);
+	}
+	
+	//delete a commander with a squad/pilots. Reassign the squad/pilots to a new commander
+	@DeleteMapping("/{commanderId}/{replacementId}")
+	public ResponseEntity<Void> deleteOne(@PathVariable int commanderId,@PathVariable int replacementId) {
+		return service.deleteOne(commanderId, replacementId);
 	}
 }

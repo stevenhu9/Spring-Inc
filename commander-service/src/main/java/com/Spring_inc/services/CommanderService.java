@@ -50,11 +50,25 @@ public class CommanderService {
 								 .body(null);
 	}
 	
-	// Delete existing Commander
-	public ResponseEntity<Void> deleteOne(int commanderId) {
-		repo.deleteById(commanderId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-							 .body(null);
+	// Delete existing Commander with no relationships
+	public ResponseEntity<String> deleteOne(int commanderId) {
+		try{
+			repo.deleteById(commanderId);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT)
+							 .body("The commander has been deleted.");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("The commander needs a replacement before it can be deleted");
+		}
+		
 	}
+	
+	// Delete existing Commander and put in a replacement
+		public ResponseEntity<Void> deleteOne(int commanderId, int replacementId) {
+			repo.deleteById(commanderId);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT)
+								 .body(null);
+			// assign squadron to new commander
+			// assign pilots to new commander
+		}
 
 }
