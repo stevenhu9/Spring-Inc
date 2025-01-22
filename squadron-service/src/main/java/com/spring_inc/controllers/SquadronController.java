@@ -31,7 +31,7 @@ import com.spring_inc.services.SquadronService;
 		
 		@GetMapping("/test")
 		public String test() {
-			return client.getTest();
+			return "test worked";
 		}
 		
 		
