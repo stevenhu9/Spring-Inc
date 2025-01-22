@@ -8,15 +8,15 @@ spring:
       - id: squadron-service-route
         uri: lb://squadron-service
         predicates:
-        - Path=/Service1/**
-      - id: Service2-service-route # need to make this/ update this
-        uri: lb://Service2-service
+        - Path=/squadron/**
+      - id: commander-service-route
+        uri: lb://commander-service
         predicates:
-        - Path=/Service2/**
-      - id: Service3-service-route # need to make this/ update this
-        uri: lb://Service3-service
+        - Path=/commander/**
+      - id: pilot-service-route # need to make this/ update this
+        uri: lb://pilot-service
         predicates:
-        - Path=/Service3/**
+        - Path=/pilot/**
 server:
   port: 9000
 

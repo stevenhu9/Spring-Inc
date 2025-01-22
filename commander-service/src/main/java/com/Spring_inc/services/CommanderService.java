@@ -44,7 +44,7 @@ public class CommanderService {
 	public ResponseEntity<Commander> updateOne(int commanderId, CommanderDTO commanderDTO) {
 		if (repo.existsById(commanderId))
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(repo.save(new Commander(0, commanderDTO.getCommanderName(), commanderDTO.getCommanderRank(), commanderDTO.getYearsOfService(), commanderDTO.getSpecialization(), commanderDTO.getActiveDuty())));
+								 .body(repo.save(new Commander(commanderId, commanderDTO.getCommanderName(), commanderDTO.getCommanderRank(), commanderDTO.getYearsOfService(), commanderDTO.getSpecialization(), commanderDTO.getActiveDuty())));
 		else
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 								 .body(null);

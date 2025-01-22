@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name = "squadron-service")
 public interface SquadronClient {
 	@PostMapping("/squadron/commander")
-	public String getAssociatedRestaurant(Integer commander);
+	public String getAssociatedCommander(Integer commander);
 }

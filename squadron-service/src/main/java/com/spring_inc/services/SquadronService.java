@@ -44,7 +44,7 @@ public class SquadronService {
 	public ResponseEntity<Squadron> updateOne(int squadronId, SquadronDTO squadronDTO) {
 		if (repo.existsById(squadronId))
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(repo.save(new Squadron(0, squadronDTO.getSquadronName(), squadronDTO.getBase(), squadronDTO.getDateFormed(), squadronDTO.getMission(), squadronDTO.getCapacity(), squadronDTO.getStatus(), squadronDTO.getCommanderId())));
+								 .body(repo.save(new Squadron(squadronId, squadronDTO.getSquadronName(), squadronDTO.getBase(), squadronDTO.getDateFormed(), squadronDTO.getMission(), squadronDTO.getCapacity(), squadronDTO.getStatus(), squadronDTO.getCommanderId())));
 		else
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 								 .body(null);
