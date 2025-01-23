@@ -2,10 +2,10 @@ spring:
   application:
    name: pilot-service
   datasource:
-    url: jdbc:mysql://localhost:3306/airforce
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
 
 server:
  port: 8083
