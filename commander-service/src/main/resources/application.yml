@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: commander-service
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_HIBERNATE_DDL}
+server:
+ port: 8082
+ 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

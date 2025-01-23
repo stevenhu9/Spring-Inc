@@ -1,4 +1,4 @@
-package com.Spring_inc.models;
+package com.spring_inc.models;
 
 import java.sql.Timestamp;
 

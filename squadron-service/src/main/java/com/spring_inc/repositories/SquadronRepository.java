@@ -1,8 +1,8 @@
-package com.Spring_inc.repositories;
+package com.spring_inc.repositories;
 
 import org.springframework.stereotype.Repository;
 
-import com.Spring_inc.models.Squadron;
+import com.spring_inc.models.Squadron;
 
 import jakarta.transaction.Transactional;
 

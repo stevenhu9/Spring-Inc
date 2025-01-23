@@ -1,4 +1,4 @@
-package com.Spring_inc.dtos;
+package com.spring_inc.dtos;
 
 import java.sql.Timestamp;
 
