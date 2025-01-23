@@ -9,6 +9,4 @@ public interface CommanderClient {
 	@GetMapping("/commander/test")
 	public String getTest();
 	
-	//@PostMapping("/menu")
-	//public String getAssociatedFood(Map<String, Integer> menuItem);
 }

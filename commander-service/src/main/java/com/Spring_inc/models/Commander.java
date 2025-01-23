@@ -37,10 +37,6 @@ public class Commander {
 	@Column(name = "active_duty")
 	private String activeDuty;
 	
-	// commander and Commander have a one to one relationship
-	//@OneToOne(mappedBy = "commander", cascade = CascadeType.ALL)
-	//@JsonIgnoreProperties("commander")
-	//private Squadron squadron;
 	
 	// default constructor for Hibernate bean
 	public Commander () {};
@@ -104,14 +100,6 @@ public class Commander {
 	public void setActiveDuty(String activeDuty) {
 		this.activeDuty= activeDuty;
 	}
-
-	//public int getSquadronId() {
-		//return squadronId;
-	//}
-
-	//public void setSquadronId(int SquadronId) {
-		//this.squadronId = SquadronId;
-	//}
 
 	@Override
 	public String toString() {

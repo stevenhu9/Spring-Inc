@@ -64,13 +64,13 @@ public class SquadronService {
 	public ResponseEntity<Object[]> getCommander(int squadronid){
 		int commanderid = repo.getCommanderID(squadronid);
 		return ResponseEntity.status(HttpStatus.OK).body(repo.getCommander(commanderid));
-		// error handeling for invalid squadron id
+		// error handling for invalid squadron id
 	}
 	
 	// get a list of the pilots assigned to the squadron
 	public ResponseEntity<List<Object[]>> getPilot(int squadid) {
 		return ResponseEntity.status(HttpStatus.OK).body(repo.getPilot(squadid));
-		// add error handeling for invalid squadron id
+		// add error handling for invalid squadron id
 	}
 	
 	// add a pilot to the squadron, returns string to user letting them know if it worked

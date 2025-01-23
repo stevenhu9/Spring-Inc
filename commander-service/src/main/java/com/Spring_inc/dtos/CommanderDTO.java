@@ -7,7 +7,6 @@ public class CommanderDTO {
 	private int yearsOfService;
 	private String specialization;
 	private String activeDuty;
-	//private int commanderId;
 	
 	
 	public CommanderDTO(String commanderName, String commanderRank, String specialization, int yearsOfService,
@@ -18,7 +17,6 @@ public class CommanderDTO {
 		this.specialization = specialization;
 		this.yearsOfService = yearsOfService;
 		this.activeDuty = activeDuty;
-		//this.commanderId = commanderId;
 	}
 	
 	public String getCommanderName() {
@@ -58,13 +56,5 @@ public class CommanderDTO {
 		return "CommanderDTO [CommanderName=" + commanderName + ", rank=" + commanderRank + ", "
 				+ "specialization=" + specialization + ", yearsOfService=" + yearsOfService + ", activeDuty=" + activeDuty + "]";
 	}
-
-	//public int getCommanderId() {
-	//	return commanderId;
-	//}
-
-	//public void setCommanderId(int commanderId) {
-	//	this.commanderId = commanderId;
-	//}
 	
 }

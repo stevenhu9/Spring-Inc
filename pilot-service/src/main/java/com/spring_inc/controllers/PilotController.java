@@ -21,14 +21,15 @@ import com.spring_inc.services.PilotService;
 	public class PilotController {
 		
 		private PilotService service;
-		private SquadronClient squadronClient;
+		private CommanderClient squadronClient;
 		
 		public PilotController(PilotService pilotService, CommanderClient commanderClient) {
 			super();
 			this.service = pilotService;
-			this.squadronClient = squadronClient;
+			this.squadronClient = commanderClient;
 		}	
 		
+		// test the api
 		@GetMapping("/test")
 		public String test() {
 			return squadronClient.getTest();

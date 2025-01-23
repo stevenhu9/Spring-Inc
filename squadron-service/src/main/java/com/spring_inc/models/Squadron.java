@@ -42,12 +42,6 @@ public class Squadron {
 	@Column(name = "status")
 	private String status;
 	
-	// commander and squadron have a one to one relationship
-	//@OneToOne
-	//@JoinColumn(name = "commander", referencedColumnName = "commander_id")
-	//@JsonIgnoreProperties("commander")
-	//private Commander commander;
-	
 	@Column(name = "commanderId")
 	private int commanderId;
 	

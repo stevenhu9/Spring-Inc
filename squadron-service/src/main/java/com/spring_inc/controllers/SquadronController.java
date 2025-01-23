@@ -78,5 +78,4 @@ import com.Spring_inc.services.SquadronService;
 			return service.addPilot(pilotid, squadronid);
 		}
 		
-		//
 	}
