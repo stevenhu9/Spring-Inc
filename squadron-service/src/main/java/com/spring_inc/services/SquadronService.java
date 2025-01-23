@@ -62,15 +62,25 @@ public class SquadronService {
 	
 	// get the commander of the squadron
 	public ResponseEntity<Object[]> getCommander(int squadronid){
-		int commanderid = repo.getCommanderID(squadronid);
-		return ResponseEntity.status(HttpStatus.OK).body(repo.getCommander(commanderid));
-		// error handling for invalid squadron id
+		if (repo.existsById(squadronid)) {
+			int commanderid = repo.getCommanderID(squadronid);
+			return ResponseEntity.status(HttpStatus.OK).body(repo.getCommander(commanderid));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					 .body(null);
+		}
 	}
 	
 	// get a list of the pilots assigned to the squadron
 	public ResponseEntity<List<Object[]>> getPilot(int squadid) {
-		return ResponseEntity.status(HttpStatus.OK).body(repo.getPilot(squadid));
-		// add error handling for invalid squadron id
+		if (repo.existsById(squadid)) {
+			return ResponseEntity.status(HttpStatus.OK).body(repo.getPilot(squadid));
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					 .body(null);
+		}
 	}
 	
 	// add a pilot to the squadron, returns string to user letting them know if it worked

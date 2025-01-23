@@ -65,7 +65,7 @@ public class CommanderController {
 	
 	//delete a commander with a squad/pilots. Reassign the squad/pilots to a new commander
 	@DeleteMapping("/{commanderId}/{replacementId}")
-	public ResponseEntity<Void> deleteOne(@PathVariable int commanderId,@PathVariable int replacementId) {
+	public ResponseEntity<String> deleteOne(@PathVariable int commanderId,@PathVariable int replacementId) {
 		return service.deleteOne(commanderId, replacementId);
 	}
 }

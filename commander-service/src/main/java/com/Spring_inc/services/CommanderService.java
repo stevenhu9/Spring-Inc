@@ -54,7 +54,7 @@ public class CommanderService {
 	public ResponseEntity<String> deleteOne(int commanderId) {
 		try{
 			repo.deleteById(commanderId);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT)
+			return ResponseEntity.status(HttpStatus.OK)
 							 .body("The commander has been deleted.");
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("The commander needs a replacement before it can be deleted");
@@ -63,12 +63,16 @@ public class CommanderService {
 	}
 	
 	// Delete existing Commander and put in a replacement
-		public ResponseEntity<Void> deleteOne(int commanderId, int replacementId) {
-			repo.deleteById(commanderId);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT)
-								 .body(null);
-			// assign squadron to new commander
-			// assign pilots to new commander
+		public ResponseEntity<String> deleteOne(int commanderId, int replacementId) {
+			try {
+				repo.reassignSquad(replacementId,commanderId);
+				repo.reassignPilot(replacementId,commanderId);
+				repo.deleteById(commanderId);
+				return ResponseEntity.status(HttpStatus.OK)
+								 	.body("The commander has been replaced");
+			}catch(Exception e) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Error with replacing commander");
+			}
 		}
 
 }
