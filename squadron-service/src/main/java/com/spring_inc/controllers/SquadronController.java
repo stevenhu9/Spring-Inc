@@ -61,21 +61,21 @@ import com.spring_inc.services.SquadronService;
 		}
 		
 		// get the commander of the squadron
-		@GetMapping("/commander/{squadronid}")
-		public ResponseEntity<Object[]> getCommander(@PathVariable int squadronid) {
-			return service.getCommander(squadronid);
+		@GetMapping("/{squadronId}/commander")
+		public ResponseEntity<Object[]> getCommander(@PathVariable int squadronId) {
+			return service.getCommander(squadronId);
 		}
 		
 		// get the pilots assigned to the squadron
-		@GetMapping("/pilot/{squadid}")
-		public ResponseEntity<List<Object[]>> getPilot(@PathVariable int squadid) {
-			return service.getPilot(squadid);
+		@GetMapping("/{squadronId}/pilot")
+		public ResponseEntity<List<Object[]>> getPilot(@PathVariable int squadronId) {
+			return service.getPilot(squadronId);
 		}
 		
 		// add a pilot to the squadron
-		@GetMapping("/addPilot/{pilotid}/{squadronid}")
-		public ResponseEntity<String> addPilot(@PathVariable int pilotid,@PathVariable int squadronid) {
-			return service.addPilot(pilotid, squadronid);
+		@PutMapping("/{squadronId}/addpilot/{pilotId}")
+		public ResponseEntity<String> addPilot(@PathVariable int pilotId, @PathVariable int squadronId) {
+			return service.addPilot(pilotId, squadronId);
 		}
 		
 	}

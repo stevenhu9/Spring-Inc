@@ -57,7 +57,7 @@ public class SquadronService {
 		repo.deleteById(squadronId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
 							 .body(null);
-		// when squadrons are deleted, set it up so that each pilot in the squadron has their squadron_id set to -1
+		//FIX: when squadrons are deleted, set it up so that each pilot in the squadron has their squadron_id set to -1
 	}
 	
 	// get the commander of the squadron
@@ -85,6 +85,7 @@ public class SquadronService {
 	
 	// add a pilot to the squadron, returns string to user letting them know if it worked
 	public ResponseEntity<String> addPilot(int pilotid, int squadronid) {
+		//FIX: Add functionality to update the squadrons capacity when pilot is added
 		int currentcapacity = repo.checkCapacity(squadronid);
 		if(currentcapacity <= 7) {
 			repo.addPilot(squadronid, pilotid);

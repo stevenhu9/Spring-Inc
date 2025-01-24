@@ -15,8 +15,7 @@ import org.springframework.data.repository.CrudRepository;
 @Repository
 public interface SquadronRepository extends CrudRepository<Squadron, Integer> {
 	
-	// Custom queries to access parts of the database
-
+	// Custom queries to access parts of the database for use in the service
 	@Query(value = "SELECT commander_id FROM squadron WHERE squadron_id = ?1", nativeQuery = true)
 	int getCommanderID(int squadronid);
 	
