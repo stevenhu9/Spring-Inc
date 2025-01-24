@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 public class SquadronDTO {
 	
-	private int id;
 	private String squadronName;
 	private String base;
 	private java.sql.Timestamp dateFormed;

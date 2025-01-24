@@ -64,9 +64,9 @@ import com.spring_inc.services.SquadronService;
 		}
 		
 		// get the commander of the squadron
-		@GetMapping("/commander/{squadronid}")
-		public ResponseEntity<CommanderDTO> getCommander(@PathVariable int squadronid) {
-			return service.getCommander(squadronid);
+		@GetMapping("/{squadronId}/commander")
+		public ResponseEntity<CommanderDTO> getCommander(@PathVariable int squadronId) {
+			return service.getCommander(squadronId);
 		}
 		
 		// get the pilots assigned to the squadron
