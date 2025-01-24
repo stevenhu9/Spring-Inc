@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring_inc.api.CommanderClient;
+import com.spring_inc.dtos.CommanderDTO;
+import com.spring_inc.dtos.PilotDTO;
+import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.dtos.SquadronDTO;
 import com.spring_inc.models.Squadron;
 import com.spring_inc.services.SquadronService;
@@ -62,19 +65,19 @@ import com.spring_inc.services.SquadronService;
 		
 		// get the commander of the squadron
 		@GetMapping("/commander/{squadronid}")
-		public ResponseEntity<Object[]> getCommander(@PathVariable int squadronid) {
+		public ResponseEntity<CommanderDTO> getCommander(@PathVariable int squadronid) {
 			return service.getCommander(squadronid);
 		}
 		
 		// get the pilots assigned to the squadron
 		@GetMapping("/pilot/{squadid}")
-		public ResponseEntity<List<Object[]>> getPilot(@PathVariable int squadid) {
+		public ResponseEntity<Iterable<PilotDTO>> getPilot(@PathVariable int squadid) {
 			return service.getPilot(squadid);
 		}
 		
 		// add a pilot to the squadron
-		@GetMapping("/addPilot/{pilotid}/{squadronid}")
-		public ResponseEntity<String> addPilot(@PathVariable int pilotid,@PathVariable int squadronid) {
+		@GetMapping("/{squadronid}/pilot/{pilotid}")
+		public ResponseEntity<ResponseDTO> addPilot(@PathVariable int pilotid,@PathVariable int squadronid) {
 			return service.addPilot(pilotid, squadronid);
 		}
 		

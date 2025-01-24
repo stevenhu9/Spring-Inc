@@ -2,11 +2,11 @@ package com.spring_inc.repositories;
 
 import org.springframework.stereotype.Repository;
 
+import com.spring_inc.dtos.CommanderDTO;
+import com.spring_inc.dtos.PilotDTO;
 import com.spring_inc.models.Squadron;
 
 import jakarta.transaction.Transactional;
-
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,10 +21,10 @@ public interface SquadronRepository extends CrudRepository<Squadron, Integer> {
 	int getCommanderID(int squadronid);
 	
 	@Query(value = "SELECT * FROM commander WHERE commander_id = ?1", nativeQuery = true)
-	Object[] getCommander(int commanderid);
+	CommanderDTO getCommander(int commanderid);
 	
 	@Query(value = "SELECT * FROM pilot WHERE squadron_id = ?1", nativeQuery = true)
-	List<Object[]> getPilot(int id);
+	Iterable<PilotDTO> getPilot(int id);
 	
 	@Query(value = "SELECT capacity from squadron WHERE squadron_id = ?1", nativeQuery = true)
 	int checkCapacity(int squadid);
