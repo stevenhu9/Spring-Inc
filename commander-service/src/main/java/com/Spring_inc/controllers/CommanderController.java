@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Spring_inc.api.SquadronClient;
 import com.Spring_inc.dtos.CommanderDTO;
+import com.Spring_inc.dtos.ResponseDTO;
 import com.Spring_inc.models.Commander;
 import com.Spring_inc.services.CommanderService;
 
@@ -53,13 +54,13 @@ public class CommanderController {
 			
 	// delete a commander with no squad/pilots assigned to it
 	@DeleteMapping("/{commanderId}")
-	public ResponseEntity<String> deleteOne(@PathVariable int commanderId) {
+	public ResponseEntity<ResponseDTO> deleteOne(@PathVariable int commanderId) {
 		return service.deleteOne(commanderId);
 	}
 	
 	//delete a commander with a squad/pilots. Reassign the squad/pilots to a new commander
 	@DeleteMapping("/{commanderId}/{replacementId}")
-	public ResponseEntity<String> deleteOne(@PathVariable int commanderId,@PathVariable int replacementId) {
+	public ResponseEntity<ResponseDTO> deleteOne(@PathVariable int commanderId,@PathVariable int replacementId) {
 		return service.deleteOne(commanderId, replacementId);
 	}
 }

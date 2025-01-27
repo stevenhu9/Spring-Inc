@@ -57,9 +57,16 @@ import com.spring_inc.services.SquadronService;
 			return service.updateOne(squadronId, squadronDTO);
 		}
 		
-		// delete one
+		// delete one that has a replacement
+		@DeleteMapping("/{squadronId}/{replacementId}")
+		public ResponseEntity<ResponseDTO> deleteOne(@PathVariable int squadronId, @PathVariable int replacementId) {
+			return service.deleteOne(squadronId, replacementId);
+		}
+		
+
+		// delete one with no relationships
 		@DeleteMapping("/{squadronId}")
-		public ResponseEntity<Void> deleteOne(@PathVariable int squadronId) {
+		public ResponseEntity<ResponseDTO> deleteOne(@PathVariable int squadronId) {
 			return service.deleteOne(squadronId);
 		}
 		

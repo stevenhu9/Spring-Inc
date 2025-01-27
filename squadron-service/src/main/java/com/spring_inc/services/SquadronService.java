@@ -13,6 +13,8 @@ import com.spring_inc.dtos.SquadronDTO;
 import com.spring_inc.models.Squadron;
 import com.spring_inc.repositories.SquadronRepository;
 
+import feign.Response;
+
 @Service
 public class SquadronService {
 
@@ -55,12 +57,25 @@ public class SquadronService {
 								 .body(null);
 	}
 	
-	// Delete existing squadron
-	public ResponseEntity<Void> deleteOne(int squadronId) {
+	// Delete existing squadron with no replacement
+	public ResponseEntity<ResponseDTO> deleteOne(int squadronId) {
 		repo.deleteById(squadronId);
+		ResponseDTO response = new ResponseDTO("The Squadron has been deleted", true);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-							 .body(null);
-		// when squadrons are deleted, set it up so that each pilot in the squadron has their members set to a replacement
+							 .body(response);
+	}
+
+	// delete existing squadron with a replacement
+	public ResponseEntity<ResponseDTO> deleteOne(int squadronId, int replacementId){
+		try {
+		repo.deleteById(squadronId);
+		ResponseDTO response = new ResponseDTO("The Squadron has been replaced",true);
+		return ResponseEntity.status(HttpStatus.OK)
+				 .body(response);
+		}catch(Exception e) {
+			ResponseDTO response = new ResponseDTO("The Squadron cannot be replaced, Error",false);
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+		}
 	}
 	
 	// get the commander of the squadron

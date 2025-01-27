@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.Spring_inc.dtos.CommanderDTO;
 import com.Spring_inc.models.Commander;
 import com.Spring_inc.repositories.CommanderRepository;
+import com.Spring_inc.dtos.ResponseDTO;
 
 @Service
 public class CommanderService {
@@ -51,27 +52,31 @@ public class CommanderService {
 	}
 	
 	// Delete existing Commander with no relationships
-	public ResponseEntity<String> deleteOne(int commanderId) {
+	public ResponseEntity<ResponseDTO> deleteOne(int commanderId) {
 		try{
 			repo.deleteById(commanderId);
+			ResponseDTO response = new ResponseDTO("The commander has been deleted",true);
 			return ResponseEntity.status(HttpStatus.OK)
-							 .body("The commander has been deleted.");
+							 .body(response);
 		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("The commander needs a replacement before it can be deleted");
+			ResponseDTO response = new ResponseDTO("The commander needs a replacement before it can be deleted",false);
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 		}
 		
 	}
 	
 	// Delete existing Commander and put in a replacement
-		public ResponseEntity<String> deleteOne(int commanderId, int replacementId) {
+		public ResponseEntity<ResponseDTO> deleteOne(int commanderId, int replacementId) {
 			try {
 				repo.reassignSquad(replacementId,commanderId);
 				repo.reassignPilot(replacementId,commanderId);
 				repo.deleteById(commanderId);
+				ResponseDTO response = new ResponseDTO("The commander has been replaced",true);
 				return ResponseEntity.status(HttpStatus.OK)
-								 	.body("The commander has been replaced");
+								 	.body(response);
 			}catch(Exception e) {
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("Error with replacing commander");
+				ResponseDTO response = new ResponseDTO("Error with replacing commander",true);
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 			}
 		}
 
