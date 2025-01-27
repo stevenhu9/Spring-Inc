@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring_inc.dtos.CommanderDTO;
 import com.spring_inc.dtos.PilotDTO;
-import com.spring_inc.models.Squadron;
+import com.spring_inc.models.Commander;
 
 import jakarta.transaction.Transactional;
 
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 @Repository
-public interface SquadronRepository extends CrudRepository<Squadron, Integer> {
+public interface SquadronRepository extends CrudRepository<Commander, Integer> {
 	
 	// Custom queries to access parts of the database for use in the service
 	@Query(value = "SELECT commander_id FROM squadron WHERE squadron_id = ?1", nativeQuery = true)

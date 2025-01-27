@@ -25,14 +25,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.spring_inc.api.CommanderClient;
-import com.spring_inc.controllers.SquadronController;
+import com.spring_inc.controllers.CommanderController;
 import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Squadron;
+import com.spring_inc.models.Commander;
 import com.spring_inc.services.SquadronService;
 
 @AutoConfigureMockMvc
-@WebMvcTest(SquadronController.class)
+@WebMvcTest(CommanderController.class)
 public class SquadronControllerTest {
 
     private MockMvc mockMvc;
@@ -47,12 +47,12 @@ public class SquadronControllerTest {
     private CommanderClient commanderClient;
 
     @InjectMocks
-    private SquadronController squadronController;
+    private CommanderController squadronController;
 
     Timestamp timestamp = Timestamp.from(Instant.now());
 
-    Squadron SQUADRON_1 = new Squadron(1, "Fire Squad", "Austin, TX", timestamp, "Classified", 0, "Active", 1);
-    Squadron SQUADRON_2 = new Squadron(2, "Sky Squad", "Dallas, TX", timestamp, "Secret", 0, "Active", 2);
+    Commander SQUADRON_1 = new Commander(1, "Fire Squad", "Austin, TX", timestamp, "Classified", 0, "Active", 1);
+    Commander SQUADRON_2 = new Commander(2, "Sky Squad", "Dallas, TX", timestamp, "Secret", 0, "Active", 2);
 
 
     @BeforeEach
@@ -63,7 +63,7 @@ public class SquadronControllerTest {
 
     @Test
     public void getAllSquadrons_success() throws Exception {
-        List<Squadron> squadrons = Arrays.asList(SQUADRON_1, SQUADRON_2);
+        List<Commander> squadrons = Arrays.asList(SQUADRON_1, SQUADRON_2);
 
         when(squadronService.findAll()).thenReturn(ResponseEntity.ok(squadrons));
 

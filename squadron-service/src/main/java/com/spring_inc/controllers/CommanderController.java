@@ -17,17 +17,17 @@ import com.spring_inc.dtos.CommanderDTO;
 import com.spring_inc.dtos.PilotDTO;
 import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Squadron;
+import com.spring_inc.models.Commander;
 import com.spring_inc.services.SquadronService;
 
 	@RestController
 	@RequestMapping("/squadron")
-	public class SquadronController {
+	public class CommanderController {
 		
 		private SquadronService service;
 		private CommanderClient client;
 		
-		public SquadronController(SquadronService squadronService, CommanderClient commanderClient) {
+		public CommanderController(SquadronService squadronService, CommanderClient commanderClient) {
 			super();
 			this.service = squadronService;
 			this.client = commanderClient;
@@ -35,25 +35,25 @@ import com.spring_inc.services.SquadronService;
 		
 		// find all
 		@GetMapping
-		public ResponseEntity<Iterable<Squadron>> findAll() {
+		public ResponseEntity<Iterable<Commander>> findAll() {
 			return service.findAll();
 		}
 		
 		// find one by ID
 		@GetMapping("/{squadronId}")
-		public ResponseEntity<Squadron> findById(@PathVariable int squadronId) {
+		public ResponseEntity<Commander> findById(@PathVariable int squadronId) {
 			return service.findById(squadronId);
 		}
 		
 		// add one
 		@PostMapping
-		public ResponseEntity<Squadron> addOne(@RequestBody SquadronDTO squadronDTO) {
+		public ResponseEntity<Commander> addOne(@RequestBody SquadronDTO squadronDTO) {
 			return service.addOne(squadronDTO);
 		}
 		
 		// update one
 		@PutMapping("/{squadronId}")
-		public ResponseEntity<Squadron> updateOne(@PathVariable int squadronId, @RequestBody SquadronDTO squadronDTO) {
+		public ResponseEntity<Commander> updateOne(@PathVariable int squadronId, @RequestBody SquadronDTO squadronDTO) {
 			return service.updateOne(squadronId, squadronDTO);
 		}
 		

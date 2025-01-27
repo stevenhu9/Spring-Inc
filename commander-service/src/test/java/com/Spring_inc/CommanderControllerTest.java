@@ -22,18 +22,19 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.Spring_inc.api.SquadronClient;
+import com.Spring_inc.controllers.CommanderController;
+import com.Spring_inc.dtos.CommanderDTO;
+import com.Spring_inc.dtos.ResponseDTO;
+import com.Spring_inc.models.Commander;
+import com.Spring_inc.services.CommanderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.spring_inc.api.CommanderClient;
-import com.spring_inc.controllers.SquadronController;
-import com.spring_inc.dtos.ResponseDTO;
-import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Squadron;
-import com.spring_inc.services.SquadronService;
+
 
 @AutoConfigureMockMvc
-@WebMvcTest(SquadronController.class)
-public class SquadronControllerTest {
+@WebMvcTest(CommanderController.class)
+public class CommanderControllerTest {
 
     private MockMvc mockMvc;
 
@@ -41,155 +42,111 @@ public class SquadronControllerTest {
     ObjectWriter objectWriter = objectMapper.writer();
 
     @MockitoBean
-    private SquadronService squadronService;
+    private CommanderService commanderService;
     
     @MockitoBean
-    private CommanderClient commanderClient;
+    private SquadronClient squadronClient;
 
     @InjectMocks
-    private SquadronController squadronController;
+    private CommanderController commanderController;
 
     Timestamp timestamp = Timestamp.from(Instant.now());
 
-    Squadron SQUADRON_1 = new Squadron(1, "Fire Squad", "Austin, TX", timestamp, "Classified", 0, "Active", 1);
-    Squadron SQUADRON_2 = new Squadron(2, "Sky Squad", "Dallas, TX", timestamp, "Secret", 0, "Active", 2);
+    Commander COMMANDER_1 = new Commander(1, "Jane Doe", "General", 10, "Infantry", "Active");
+    Commander COMMANDER_2 = new Commander(2, "John Doe", "Low", 1, "Infantry", "Active");
 
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(squadronController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(commanderController).build();
     }
 
     @Test
-    public void getAllSquadrons_success() throws Exception {
-        List<Squadron> squadrons = Arrays.asList(SQUADRON_1, SQUADRON_2);
+    public void getAllCommanders_success() throws Exception {
+        List<Commander> commanders = Arrays.asList(COMMANDER_1, COMMANDER_2);
 
-        when(squadronService.findAll()).thenReturn(ResponseEntity.ok(squadrons));
+        when(commanderService.findAll()).thenReturn(ResponseEntity.ok(commanders));
 
-        mockMvc.perform(get("/squadron")
+        mockMvc.perform(get("/commander")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].squadronName").value("Fire Squad"))
-                .andExpect(jsonPath("$[1].squadronName").value("Sky Squad"));
+                .andExpect(jsonPath("$[0].commanderName").value("Jane Doe"))
+                .andExpect(jsonPath("$[1].commanderName").value("John Doe"));
 
-        verify(squadronService, times(1)).findAll();
+        verify(commanderService, times(1)).findAll();
     }
 
     @Test
-    public void getSquadronById_success() throws Exception {
-        when(squadronService.findById(1)).thenReturn(ResponseEntity.ok(SQUADRON_1));
+    public void getCommanderById_success() throws Exception {
+        when(commanderService.findById(1)).thenReturn(ResponseEntity.ok(COMMANDER_1));
 
-        mockMvc.perform(get("/squadron/1")
+        mockMvc.perform(get("/commander/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.squadronName").value("Fire Squad"));
+                .andExpect(jsonPath("$.commanderName").value("Jane Doe"));
 
-        verify(squadronService, times(1)).findById(1);
+        verify(commanderService, times(1)).findById(1);
     }
 
     @Test
-    public void addSquadron_success() throws Exception {
-        SquadronDTO squadronDTO = new SquadronDTO("Fire Squad", "Austin, TX", timestamp, "Classified", 0, "Active", 1);
-        when(squadronService.addOne(any(SquadronDTO.class))).thenReturn(ResponseEntity.ok(SQUADRON_1));
+    public void addCommander_success() throws Exception {
+    	CommanderDTO commanderDTO = new CommanderDTO("Jane Doe", "General", "Infantry", 10, "Active");
+        when(commanderService.addOne(any(CommanderDTO.class))).thenReturn(ResponseEntity.ok(COMMANDER_1));
 
-        String content = objectWriter.writeValueAsString(squadronDTO);
+        String content = objectWriter.writeValueAsString(commanderDTO);
 
-        mockMvc.perform(post("/squadron")
+        mockMvc.perform(post("/commander")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.squadronName").value("Fire Squad"));
+                .andExpect(jsonPath("$.commanderName").value("Jane Doe"));
 
-        verify(squadronService, times(1)).addOne(any(SquadronDTO.class));
+        verify(commanderService, times(1)).addOne(any(CommanderDTO.class));
     }
 
     @Test
-    public void updateSquadron_success() throws Exception {
-        SquadronDTO squadronDTO = new SquadronDTO("Sky Squad Updated", "Dallas, TX", timestamp, "Secret", 0, "Active", 2);
-        SQUADRON_2.setSquadronName("Sky Squad Updated");
+    public void updateCommander_success() throws Exception {
+    	CommanderDTO commanderDTO = new CommanderDTO("John Doe", "Low", "Infantry", 1, "Active");
+        COMMANDER_2.setCommanderName("Jimmy Doe");
 
-        when(squadronService.updateOne(eq(2), any(SquadronDTO.class))).thenReturn(ResponseEntity.ok(SQUADRON_2));
+        when(commanderService.updateOne(eq(2), any(CommanderDTO.class))).thenReturn(ResponseEntity.ok(COMMANDER_2));
 
-        String content = objectWriter.writeValueAsString(squadronDTO);
+        String content = objectWriter.writeValueAsString(commanderDTO);
 
-        mockMvc.perform(put("/squadron/2")
+        mockMvc.perform(put("/commander/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.squadronName").value("Sky Squad Updated"));
+                .andExpect(jsonPath("$.commanderName").value("Jimmy Doe"));
 
-        verify(squadronService, times(1)).updateOne(eq(2), any(SquadronDTO.class));
+        verify(commanderService, times(1)).updateOne(eq(2), any(CommanderDTO.class));
     }
 
     @Test
-    public void deleteSquadronWithReplacement_success() throws Exception {
-        ResponseDTO responseDTO = new ResponseDTO("Squadron deleted successfully", true);
-        when(squadronService.deleteOne(1, 2)).thenReturn(ResponseEntity.ok(responseDTO));
+    public void deleteCommanderWithReplacement_success() throws Exception {
+        ResponseDTO responseDTO = new ResponseDTO("Commander deleted successfully", true);
+        when(commanderService.deleteOne(1, 2)).thenReturn(ResponseEntity.ok(responseDTO));
 
-        mockMvc.perform(delete("/squadron/1/2")
+        mockMvc.perform(delete("/commander/1/2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Squadron deleted successfully"));
+                .andExpect(jsonPath("$.message").value("Commander deleted successfully"));
 
-        verify(squadronService, times(1)).deleteOne(1, 2);
+        verify(commanderService, times(1)).deleteOne(1, 2);
     }
 
     @Test
-    public void deleteSquadronWithoutReplacement_success() throws Exception {
-        ResponseDTO responseDTO = new ResponseDTO("Squadron deleted successfully", true);
-        when(squadronService.deleteOne(1)).thenReturn(ResponseEntity.ok(responseDTO));
+    public void deleteCommanderWithoutReplacement_success() throws Exception {
+        ResponseDTO responseDTO = new ResponseDTO("Commander deleted successfully", true);
+        when(commanderService.deleteOne(1)).thenReturn(ResponseEntity.ok(responseDTO));
 
-        mockMvc.perform(delete("/squadron/1")
+        mockMvc.perform(delete("/commander/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Squadron deleted successfully"));
+                .andExpect(jsonPath("$.message").value("Commander deleted successfully"));
 
-        verify(squadronService, times(1)).deleteOne(1);
+        verify(commanderService, times(1)).deleteOne(1);
     }
-    
-    //fix: commander id not found
-    @Test
-    public void getCommanderOfSquadron_success() throws Exception {
-    	when(squadronService.findById(1)).thenReturn(ResponseEntity.ok(SQUADRON_1));
-
-        mockMvc.perform(get("/squadron/1/commander")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.commanderId").value(1));
-
-        verify(squadronService, times(1)).findById(1);
-    }
-    //fix: find access to pilot class
-//    @Test
-//    public void getPilotsInSquadron_success() throws Exception {
-//    	 List<Pilot> pilots = Arrays.asList(SQUADRON_1, SQUADRON_2);
-//
-//         when(squadronService.findAll()).thenReturn(ResponseEntity.ok(squadrons));
-//
-//         mockMvc.perform(get("/squadron")
-//                 .contentType(MediaType.APPLICATION_JSON))
-//                 .andExpect(status().isOk())
-//                 .andExpect(jsonPath("$[0].squadronName").value("Fire Squad"))
-//                 .andExpect(jsonPath("$[1].squadronName").value("Sky Squad"));
-//
-//         verify(squadronService, times(1)).findAll();
-//    }
-    
-//    @Test
-//    public void addPilotToSquadron_success() throws Exception {
-//        SquadronDTO squadronDTO = new SquadronDTO("Fire Squad", "Austin, TX", timestamp, "Classified", 0, "Active", 1);
-//        when(squadronService.addOne(any(SquadronDTO.class))).thenReturn(ResponseEntity.ok(SQUADRON_1));
-//
-//        String content = objectWriter.writeValueAsString(squadronDTO);
-//
-//        mockMvc.perform(post("/squadron")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(content))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.squadronName").value("Fire Squad"));
-//
-//        verify(squadronService, times(1)).addOne(any(SquadronDTO.class));
-//    }
     
 }
