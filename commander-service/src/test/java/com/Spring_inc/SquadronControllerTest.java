@@ -1,4 +1,4 @@
-package com.spring_inc;
+package com.Spring_inc;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
