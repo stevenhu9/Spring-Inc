@@ -16,6 +16,8 @@ import com.spring_inc.dtos.PilotDTO;
 import com.spring_inc.models.Pilot;
 import com.spring_inc.services.PilotService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 	@RestController
 	@RequestMapping("/pilot")
 	public class PilotController {
@@ -38,30 +40,35 @@ import com.spring_inc.services.PilotService;
 		
 		// find all
 		@GetMapping
+		@Operation(summary ="Get All Pilots", description = "Fetches all Pilots from the database")
 		public ResponseEntity<Iterable<Pilot>> findAll() {
 			return service.findAll();
 		}
 		
 		// find one by ID
 		@GetMapping("/{pilotId}")
+		@Operation(summary ="Find by Id", description = "Fetches a Pilot based on their ID")
 		public ResponseEntity<Pilot> findById(@PathVariable int pilotId) {
 			return service.findById(pilotId);
 		}
 		
 		// add one
 		@PostMapping
+		@Operation(summary ="Add Pilot", description = "Add a Pilot to the database")
 		public ResponseEntity<Pilot> addOne(@RequestBody PilotDTO pilotDTO) {
 			return service.addOne(pilotDTO);
 		}
 		
 		// update one
 		@PutMapping("/{pilotId}")
+		@Operation(summary ="Update Pilot", description = "Updates a pilot in the database")
 		public ResponseEntity<Pilot> updateOne(@PathVariable int pilotId, @RequestBody PilotDTO pilotDTO) {
 			return service.updateOne(pilotId, pilotDTO);
 		}
 		
 		// delete one
 		@DeleteMapping("/{pilotId}")
+		@Operation(summary ="Delete Pilot", description = "Delete a Pilot in the database")
 		public ResponseEntity<Void> deleteOne(@PathVariable int pilotId) {
 			return service.deleteOne(pilotId);
 		} 

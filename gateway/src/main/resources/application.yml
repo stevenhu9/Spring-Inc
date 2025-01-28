@@ -9,14 +9,46 @@ spring:
         uri: lb://squadron-service
         predicates:
         - Path=/squadron/**
+
       - id: commander-service-route
         uri: lb://commander-service
         predicates:
         - Path=/commander/**
-      - id: pilot-service-route # need to make this/ update this
+
+      - id: pilot-service-route
         uri: lb://pilot-service
         predicates:
         - Path=/pilot/**
+
+      - id: swagger-ui-squadron
+        uri: lb://squadron-service
+        predicates:
+        - Path=/swagger-ui/**
+
+      - id: swagger-ui-commander
+        uri: lb://commander-service
+        predicates:
+        - Path=/swagger-ui/**
+
+      - id: swagger-ui-pilot
+        uri: lb://pilot-service
+        predicates:
+        - Path=/swagger-ui/**
+
+      - id: api-docs-squadron
+        uri: lb://squadron-service
+        predicates:
+        - Path=/v3/api-docs/**
+
+      - id: api-docs-commander
+        uri: lb://commander-service
+        predicates:
+        - Path=/v3/api-docs/**
+
+      - id: api-docs-pilot
+        uri: lb://pilot-service
+        predicates:
+        - Path=/v3/api-docs/**
 server:
   port: 9000
 

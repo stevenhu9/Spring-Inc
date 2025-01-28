@@ -25,14 +25,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.spring_inc.api.CommanderClient;
-import com.spring_inc.controllers.CommanderController;
+import com.spring_inc.controllers.SquadronController;
 import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.dtos.SquadronDTO;
 import com.spring_inc.models.Squadron;
 import com.spring_inc.services.SquadronService;
 
 @AutoConfigureMockMvc
-@WebMvcTest(CommanderController.class)
+@WebMvcTest(SquadronController.class)
 public class SquadronControllerTest {
 
     private MockMvc mockMvc;
@@ -47,7 +47,7 @@ public class SquadronControllerTest {
     private CommanderClient commanderClient;
 
     @InjectMocks
-    private CommanderController squadronController;
+    private SquadronController squadronController;
 
     Timestamp timestamp = Timestamp.from(Instant.now());
 
