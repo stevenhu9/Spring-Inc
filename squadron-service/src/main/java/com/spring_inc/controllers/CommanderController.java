@@ -1,7 +1,5 @@
 package com.spring_inc.controllers;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +15,7 @@ import com.spring_inc.dtos.CommanderDTO;
 import com.spring_inc.dtos.PilotDTO;
 import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.dtos.SquadronDTO;
-import com.spring_inc.models.Commander;
+import com.spring_inc.models.Squadron;
 import com.spring_inc.services.SquadronService;
 
 	@RestController
@@ -35,25 +33,25 @@ import com.spring_inc.services.SquadronService;
 		
 		// find all
 		@GetMapping
-		public ResponseEntity<Iterable<Commander>> findAll() {
+		public ResponseEntity<Iterable<Squadron>> findAll() {
 			return service.findAll();
 		}
 		
 		// find one by ID
 		@GetMapping("/{squadronId}")
-		public ResponseEntity<Commander> findById(@PathVariable int squadronId) {
+		public ResponseEntity<Squadron> findById(@PathVariable int squadronId) {
 			return service.findById(squadronId);
 		}
 		
 		// add one
 		@PostMapping
-		public ResponseEntity<Commander> addOne(@RequestBody SquadronDTO squadronDTO) {
+		public ResponseEntity<Squadron> addOne(@RequestBody SquadronDTO squadronDTO) {
 			return service.addOne(squadronDTO);
 		}
 		
 		// update one
 		@PutMapping("/{squadronId}")
-		public ResponseEntity<Commander> updateOne(@PathVariable int squadronId, @RequestBody SquadronDTO squadronDTO) {
+		public ResponseEntity<Squadron> updateOne(@PathVariable int squadronId, @RequestBody SquadronDTO squadronDTO) {
 			return service.updateOne(squadronId, squadronDTO);
 		}
 		

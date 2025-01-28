@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "squadron")
-public class Commander {
+public class Squadron {
 	
 	// Table columns
 	@Id
@@ -46,10 +46,10 @@ public class Commander {
 	private int commanderId;
 	
 	// default constructor for Hibernate bean
-	public Commander() {};
+	public Squadron() {};
 	
 	//constructor, getters, setters, and toString
-	public Commander(int squadronId, String squadronName, String base, Timestamp dateFormed, String mission,
+	public Squadron(int squadronId, String squadronName, String base, Timestamp dateFormed, String mission,
 			int capacity, String status, int commanderId) {
 		super();
 		this.squadronId = squadronId;
