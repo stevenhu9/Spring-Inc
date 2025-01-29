@@ -1,7 +1,5 @@
 package com.spring_inc.services;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,8 +10,6 @@ import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.dtos.SquadronDTO;
 import com.spring_inc.models.Squadron;
 import com.spring_inc.repositories.SquadronRepository;
-
-import feign.Response;
 
 @Service
 public class SquadronService {
