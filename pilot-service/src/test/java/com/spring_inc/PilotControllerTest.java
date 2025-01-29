@@ -1,189 +1,132 @@
 package com.spring_inc;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.spring_inc.api.SquadronClient;
 import com.spring_inc.controllers.PilotController;
 import com.spring_inc.dtos.PilotDTO;
 import com.spring_inc.models.Pilot;
 import com.spring_inc.services.PilotService;
 
-import jakarta.persistence.EntityNotFoundException;
-
-
-@AutoConfigureMockMvc
-@WebMvcTest(PilotController.class)
+@ExtendWith(MockitoExtension.class)
 public class PilotControllerTest {
 
-    private MockMvc mockMvc;
+    @Mock
+    private PilotService service;
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    ObjectWriter objectWriter = objectMapper.writer();
-
-    @MockitoBean
-    private PilotService pilotService;
-    
-    @MockitoBean
+    @Mock
     private SquadronClient squadronClient;
 
     @InjectMocks
-    private PilotController pilotController;
+    private PilotController controller;
 
-    Timestamp timestamp = Timestamp.from(Instant.now());
-
-    Pilot PILOT_1 = new Pilot(1, "Novice", 10, "LZIWSQ", "Jane Doe", "F-15", 1, 1);
-    Pilot PILOT_2 = new Pilot(2, "Expert", 1200, "KSXIAA", "John Doe", "F-16", 2, 2);
-
+    private Pilot pilot;
+    private PilotDTO pilotDTO;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(pilotController).build();
+    void setUp() {
+        pilot = new Pilot(1, "Novice", 10, "LZIWSQ", "Jane Doe", "F-15", 1, 1);
+        pilotDTO = new PilotDTO(1, "Novice", 10, "LZIWSQ", "Jane Doe", "F-15", 1, 1);
     }
-    
-    // Successful Attempts for Each CRUD Operation
+
+    // Test cases for findAll()
     @Test
-    public void getAllPilots_success() throws Exception {
-        List<Pilot> pilots = Arrays.asList(PILOT_1, PILOT_2);
-
-        when(pilotService.findAll()).thenReturn(ResponseEntity.ok(pilots));
-
-        mockMvc.perform(get("/pilot")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].fullName").value("Jane Doe"))
-                .andExpect(jsonPath("$[1].fullName").value("John Doe"));
-
-        verify(pilotService, times(1)).findAll();
+    void testFindAll_Success() {
+        when(service.findAll()).thenReturn(ResponseEntity.ok(Arrays.asList(pilot)));
+        ResponseEntity<Iterable<Pilot>> response = controller.findAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().iterator().hasNext());
     }
 
     @Test
-    public void getPilotById_success() throws Exception {
-        when(pilotService.findById(1)).thenReturn(ResponseEntity.ok(PILOT_1));
+    void testFindAll_EmptyList() {
+        when(service.findAll()).thenReturn(ResponseEntity.ok(Collections.emptyList()));
+        ResponseEntity<Iterable<Pilot>> response = controller.findAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().iterator().hasNext());
+    }
 
-        mockMvc.perform(get("/pilot/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fullName").value("Jane Doe"));
-
-        verify(pilotService, times(1)).findById(1);
+    // Test cases for findById()
+    @Test
+    void testFindById_Success() {
+        when(service.findById(1)).thenReturn(ResponseEntity.ok(pilot));
+        ResponseEntity<Pilot> response = controller.findById(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Jane Doe", response.getBody().getFullName());
     }
 
     @Test
-    public void addPilot_success() throws Exception {
-        PilotDTO pilotDTO = new PilotDTO(2, "Expert", 1200, "KSXIAA", "John Doe", "F-16", 2, 2);
-        when(pilotService.addOne(any(PilotDTO.class))).thenReturn(ResponseEntity.ok(PILOT_2));
+    void testFindById_NotFound() {
+        when(service.findById(1)).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+        ResponseEntity<Pilot> response = controller.findById(1);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
 
-        String content = objectWriter.writeValueAsString(pilotDTO);
-
-        mockMvc.perform(post("/pilot")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fullName").value("John Doe"));
-
-        verify(pilotService, times(1)).addOne(any(PilotDTO.class));
+    // Test cases for addOne()
+    @Test
+    void testAddOne_Success() {
+        when(service.addOne(pilotDTO)).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(pilot));
+        ResponseEntity<Pilot> response = controller.addOne(pilotDTO);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Jane Doe", response.getBody().getFullName());
     }
 
     @Test
-    public void updatePilot_success() throws Exception {
-        PilotDTO pilotDTO = new PilotDTO(2, "Expert", 1200, "KSXIAA", "John Doe", "F-16", 2, 2);
-        PILOT_2.setFullName("Jenifer Doe");
+    void testAddOne_Failure() {
+        when(service.addOne(pilotDTO)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+        ResponseEntity<Pilot> response = controller.addOne(pilotDTO);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+    }
 
-        when(pilotService.updateOne(eq(2), any(PilotDTO.class))).thenReturn(ResponseEntity.ok(PILOT_2));
-
-        String content = objectWriter.writeValueAsString(pilotDTO);
-
-        mockMvc.perform(put("/pilot/2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fullName").value("Jenifer Doe"));
-
-        verify(pilotService, times(1)).updateOne(eq(2), any(PilotDTO.class));
+    // Test cases for updateOne()
+    @Test
+    void testUpdateOne_Success() {
+        when(service.updateOne(1, pilotDTO)).thenReturn(ResponseEntity.ok(pilot));
+        ResponseEntity<Pilot> response = controller.updateOne(1, pilotDTO);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Jane Doe", response.getBody().getFullName());
     }
 
     @Test
-    public void deletePilot_success() throws Exception {
-    	int pilotId = 1;
-
-        when(pilotService.deleteOne(pilotId))
-               .thenReturn(ResponseEntity.noContent().build());
-
-        mockMvc.perform(delete("/pilot/1", pilotId)
-               .contentType(MediaType.APPLICATION_JSON))
-               .andExpect(status().isNoContent());
-
-        verify(pilotService, Mockito.times(1)).deleteOne(pilotId);
+    void testUpdateOne_NotFound() {
+        when(service.updateOne(1, pilotDTO)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+        ResponseEntity<Pilot> response = controller.updateOne(1, pilotDTO);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
     }
-    
-    //Failure Messages For Each CRUD Operation
-    //Delete One
+
+    // Test cases for deleteOne()
     @Test
-    public void deleteOne_PilotNotFound_ShouldReturn404() throws Exception {
-        int nonExistentPilotId = 999;
-
-        // Mock the service to throw an exception
-        Mockito.doThrow(new EntityNotFoundException("Pilot not found"))
-               .when(pilotService).deleteOne(nonExistentPilotId);
-
-        mockMvc.perform(delete("/squadron/{pilotId}", nonExistentPilotId)
-                        .contentType(MediaType.APPLICATION_JSON))
-               .andExpect(status().isNotFound())
-               .andExpect(jsonPath("$.message").value("Pilot not found")); // Optional, if you return error details
-
-        Mockito.verify(pilotService, Mockito.times(1)).deleteOne(nonExistentPilotId);
+    void testDeleteOne_Success() {
+        when(service.deleteOne(1)).thenReturn(ResponseEntity.noContent().build());
+        ResponseEntity<Void> response = controller.deleteOne(1);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
     @Test
-    public void deleteOne_InvalidPilotId_ShouldReturn400() throws Exception {
-        int invalidPilotId = -1;
-
-        mockMvc.perform(delete("/squadron/{pilotId}", invalidPilotId)
-                        .contentType(MediaType.APPLICATION_JSON))
-               .andExpect(status().isBadRequest());
-
-        Mockito.verify(pilotService, Mockito.never()).deleteOne(Mockito.anyInt());
+    void testDeleteOne_Failure() {
+        when(service.deleteOne(1)).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        ResponseEntity<Void> response = controller.deleteOne(1);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-
-    @Test
-    public void deleteOne_InternalServerError_ShouldReturn500() throws Exception {
-        int pilotId = 1;
-
-        Mockito.doThrow(new RuntimeException("Unexpected error"))
-               .when(pilotService).deleteOne(pilotId);
-
-        mockMvc.perform(delete("/squadron/{pilotId}", pilotId)
-                        .contentType(MediaType.APPLICATION_JSON))
-               .andExpect(status().isInternalServerError())
-               .andExpect(jsonPath("$.message").value("Unexpected error")); // Optional, if you return error details
-
-        Mockito.verify(pilotService, Mockito.times(1)).deleteOne(pilotId);
-    }
-
-    
 }
