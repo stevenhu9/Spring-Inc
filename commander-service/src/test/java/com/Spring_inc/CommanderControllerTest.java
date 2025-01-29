@@ -1,26 +1,19 @@
 package com.Spring_inc;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.Spring_inc.api.SquadronClient;
 import com.Spring_inc.controllers.CommanderController;
@@ -28,125 +21,138 @@ import com.Spring_inc.dtos.CommanderDTO;
 import com.Spring_inc.dtos.ResponseDTO;
 import com.Spring_inc.models.Commander;
 import com.Spring_inc.services.CommanderService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
-
-@AutoConfigureMockMvc
-@WebMvcTest(CommanderController.class)
+@ExtendWith(MockitoExtension.class)
 public class CommanderControllerTest {
 
-    private MockMvc mockMvc;
+    @Mock
+    private CommanderService service;
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    ObjectWriter objectWriter = objectMapper.writer();
-
-    @MockitoBean
-    private CommanderService commanderService;
-    
-    @MockitoBean
-    private SquadronClient squadronClient;
+    @Mock
+    private SquadronClient client;
 
     @InjectMocks
-    private CommanderController commanderController;
+    private CommanderController controller;
 
-    Timestamp timestamp = Timestamp.from(Instant.now());
-
-    Commander COMMANDER_1 = new Commander(1, "Jane Doe", "General", 10, "Infantry", "Active");
-    Commander COMMANDER_2 = new Commander(2, "John Doe", "Low", 1, "Infantry", "Active");
-
+    private Commander commander;
+    private CommanderDTO commanderDTO;
+    private ResponseDTO responseDTO;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(commanderController).build();
+    void setUp() {
+        commander = new Commander(1, "Jane Doe", "General", 10, "Infantry", "Active");
+        commanderDTO = new CommanderDTO("John Doe", "Novice", "Infantry", 5, "Active");
+        responseDTO = new ResponseDTO("Success", true);
+    }
+
+    // Test cases for findAll()
+    @Test
+    void testFindAll_Success() {
+        when(service.findAll()).thenReturn(ResponseEntity.ok(Arrays.asList(commander)));
+        ResponseEntity<Iterable<Commander>> response = controller.findAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().iterator().hasNext());
     }
 
     @Test
-    public void getAllCommanders_success() throws Exception {
-        List<Commander> commanders = Arrays.asList(COMMANDER_1, COMMANDER_2);
+    void testFindAll_EmptyList() {
+        when(service.findAll()).thenReturn(ResponseEntity.ok(Collections.emptyList()));
+        ResponseEntity<Iterable<Commander>> response = controller.findAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().iterator().hasNext());
+    }
 
-        when(commanderService.findAll()).thenReturn(ResponseEntity.ok(commanders));
-
-        mockMvc.perform(get("/commander")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].commanderName").value("Jane Doe"))
-                .andExpect(jsonPath("$[1].commanderName").value("John Doe"));
-
-        verify(commanderService, times(1)).findAll();
+    // Test cases for findById()
+    @Test
+    void testFindById_Success() {
+        when(service.findById(1)).thenReturn(ResponseEntity.ok(commander));
+        ResponseEntity<Commander> response = controller.findById(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Jane Doe", response.getBody().getCommanderName());
     }
 
     @Test
-    public void getCommanderById_success() throws Exception {
-        when(commanderService.findById(1)).thenReturn(ResponseEntity.ok(COMMANDER_1));
+    void testFindById_NotFound() {
+        when(service.findById(1)).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+        ResponseEntity<Commander> response = controller.findById(1);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
 
-        mockMvc.perform(get("/commander/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.commanderName").value("Jane Doe"));
-
-        verify(commanderService, times(1)).findById(1);
+    // Test cases for addOne()
+    @Test
+    void testAddOne_Success() {
+        when(service.addOne(commanderDTO)).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(commander));
+        ResponseEntity<Commander> response = controller.addOne(commanderDTO);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Jane Doe", response.getBody().getCommanderName());
     }
 
     @Test
-    public void addCommander_success() throws Exception {
-    	CommanderDTO commanderDTO = new CommanderDTO("Jane Doe", "General", "Infantry", 10, "Active");
-        when(commanderService.addOne(any(CommanderDTO.class))).thenReturn(ResponseEntity.ok(COMMANDER_1));
+    void testAddOne_Failure() {
+        when(service.addOne(commanderDTO)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+        ResponseEntity<Commander> response = controller.addOne(commanderDTO);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+    }
 
-        String content = objectWriter.writeValueAsString(commanderDTO);
-
-        mockMvc.perform(post("/commander")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.commanderName").value("Jane Doe"));
-
-        verify(commanderService, times(1)).addOne(any(CommanderDTO.class));
+    // Test cases for updateOne()
+    @Test
+    void testUpdateOne_Success() {
+        when(service.updateOne(1, commanderDTO)).thenReturn(ResponseEntity.ok(commander));
+        ResponseEntity<Commander> response = controller.updateOne(1, commanderDTO);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Jane Doe", response.getBody().getCommanderName());
     }
 
     @Test
-    public void updateCommander_success() throws Exception {
-    	CommanderDTO commanderDTO = new CommanderDTO("John Doe", "Low", "Infantry", 1, "Active");
-        COMMANDER_2.setCommanderName("Jimmy Doe");
+    void testUpdateOne_NotFound() {
+        when(service.updateOne(1, commanderDTO)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+        ResponseEntity<Commander> response = controller.updateOne(1, commanderDTO);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+    }
 
-        when(commanderService.updateOne(eq(2), any(CommanderDTO.class))).thenReturn(ResponseEntity.ok(COMMANDER_2));
-
-        String content = objectWriter.writeValueAsString(commanderDTO);
-
-        mockMvc.perform(put("/commander/2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.commanderName").value("Jimmy Doe"));
-
-        verify(commanderService, times(1)).updateOne(eq(2), any(CommanderDTO.class));
+    // Test cases for deleteOne() without replacement
+    @Test
+    void testDeleteOne_Success() {
+        when(service.deleteOne(1)).thenReturn(ResponseEntity.ok(responseDTO));
+        ResponseEntity<ResponseDTO> response = controller.deleteOne(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().isSuccess());
     }
 
     @Test
-    public void deleteCommanderWithReplacement_success() throws Exception {
-        ResponseDTO responseDTO = new ResponseDTO("Commander deleted successfully", true);
-        when(commanderService.deleteOne(1, 2)).thenReturn(ResponseEntity.ok(responseDTO));
+    void testDeleteOne_Failure() {
+        when(service.deleteOne(1)).thenReturn(ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDTO("Error", false)));
+        ResponseEntity<ResponseDTO> response = controller.deleteOne(1);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().isSuccess());
+    }
 
-        mockMvc.perform(delete("/commander/1/2")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Commander deleted successfully"));
-
-        verify(commanderService, times(1)).deleteOne(1, 2);
+    // Test cases for deleteOne() with replacement
+    @Test
+    void testDeleteOneWithReplacement_Success() {
+        when(service.deleteOne(1, 2)).thenReturn(ResponseEntity.ok(responseDTO));
+        ResponseEntity<ResponseDTO> response = controller.deleteOne(1, 2);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().isSuccess());
     }
 
     @Test
-    public void deleteCommanderWithoutReplacement_success() throws Exception {
-        ResponseDTO responseDTO = new ResponseDTO("Commander deleted successfully", true);
-        when(commanderService.deleteOne(1)).thenReturn(ResponseEntity.ok(responseDTO));
-
-        mockMvc.perform(delete("/commander/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Commander deleted successfully"));
-
-        verify(commanderService, times(1)).deleteOne(1);
+    void testDeleteOneWithReplacement_Failure() {
+        when(service.deleteOne(1, 2)).thenReturn(ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDTO("Error", false)));
+        ResponseEntity<ResponseDTO> response = controller.deleteOne(1, 2);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().isSuccess());
     }
-    
 }
