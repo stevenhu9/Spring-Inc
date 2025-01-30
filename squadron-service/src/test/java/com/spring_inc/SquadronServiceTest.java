@@ -168,11 +168,10 @@ public class SquadronServiceTest {
         assertNull(response.getBody());
     }
 
-    //FIX: doNothing is incorrect
     @Test
     void testAddPilot() {
         when(repo.checkCapacity(1)).thenReturn(5);
-        doNothing().when(repo).addPilot(1, 1);
+        when(repo.addPilot(1, 1)).thenReturn(1);
         ResponseEntity<ResponseDTO> response = squadronService.addPilot(1, 1);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());

@@ -10,7 +10,7 @@ public class CommanderDTO {
 	private byte activeDuty;
 	
 	
-	public CommanderDTO(int id, String commanderName, String commanderRank, int yearsOfService,String specialization,
+	public CommanderDTO(int id, String commanderName, String commanderRank, int yearsOfService, String specialization,
 			byte activeDuty) {
 		super();
 		this.id = id;
