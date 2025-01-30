@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.spring_inc.dtos.PilotDTO;
+import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.models.Pilot;
 import com.spring_inc.repositories.PilotRepository;
 
@@ -51,9 +52,16 @@ public class PilotService {
 	}
 	
 	// Delete existing pilot
-	public ResponseEntity<Void> deleteOne(int pilotId) {
+	public ResponseEntity<ResponseDTO> deleteOne(int pilotId) {
+		try {
 		repo.deleteById(pilotId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-							 .body(null);
+		ResponseDTO response = new ResponseDTO("The Pilot has been deleted", true);
+		return ResponseEntity.status(HttpStatus.OK)
+							 .body(response);
+		}catch(Exception e) {
+			ResponseDTO response = new ResponseDTO("The Pilot could not be deleted", false);
+			return ResponseEntity.status(HttpStatus.CONFLICT)
+								 .body(response);
+		}
 	}
 }

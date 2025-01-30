@@ -55,10 +55,16 @@ public class SquadronService {
 	
 	// Delete existing squadron with no replacement
 	public ResponseEntity<ResponseDTO> deleteOne(int squadronId) {
+		try {
 		repo.deleteById(squadronId);
 		ResponseDTO response = new ResponseDTO("The Squadron has been deleted", true);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
+		return ResponseEntity.status(HttpStatus.OK)
 							 .body(response);
+		}catch(Exception e) {
+			ResponseDTO response = new ResponseDTO("The Squadron needs to have a replacement", false);
+			return ResponseEntity.status(HttpStatus.CONFLICT)
+					 .body(response);
+		}
 	}
 
 	// delete existing squadron with a replacement

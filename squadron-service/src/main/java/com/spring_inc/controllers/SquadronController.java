@@ -91,7 +91,7 @@ import io.swagger.v3.oas.annotations.Operation;
 		}
 		
 		// add a pilot to the squadron
-		@GetMapping("/{squadronid}/pilot/{pilotid}")
+		@PutMapping("/{squadronid}/pilot/{pilotid}")
 		@Operation(summary ="Add Pilot to Squadron", description = "Add a pilot to a squadron. Checks for full squadrons")
 		public ResponseEntity<ResponseDTO> addPilot(@PathVariable int pilotid,@PathVariable int squadronid) {
 			return service.addPilot(pilotid, squadronid);

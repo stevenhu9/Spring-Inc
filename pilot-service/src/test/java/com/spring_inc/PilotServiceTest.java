@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.spring_inc.dtos.PilotDTO;
+import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.models.Pilot;
 import com.spring_inc.repositories.PilotRepository;
 import com.spring_inc.services.PilotService;
@@ -123,10 +124,9 @@ public class PilotServiceTest {
 
         doNothing().when(repo).deleteById(1);
 
-        ResponseEntity<Void> response = pilotService.deleteOne(1);
+        ResponseEntity<ResponseDTO> response = pilotService.deleteOne(1);
 
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        assertNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(repo, times(1)).deleteById(1);
     }
 }

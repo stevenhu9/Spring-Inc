@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring_inc.api.CommanderClient;
 import com.spring_inc.api.SquadronClient;
 import com.spring_inc.dtos.PilotDTO;
+import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.models.Pilot;
 import com.spring_inc.services.PilotService;
 
@@ -30,13 +31,6 @@ import io.swagger.v3.oas.annotations.Operation;
 			this.service = pilotService;
 			this.squadronClient = commanderClient;
 		}	
-		
-		// test the api
-		@GetMapping("/test")
-		public String test() {
-			return squadronClient.getTest();
-		}
-		
 		
 		// find all
 		@GetMapping
@@ -69,7 +63,7 @@ import io.swagger.v3.oas.annotations.Operation;
 		// delete one
 		@DeleteMapping("/{pilotId}")
 		@Operation(summary ="Delete Pilot", description = "Delete a Pilot in the database")
-		public ResponseEntity<Void> deleteOne(@PathVariable int pilotId) {
+		public ResponseEntity<ResponseDTO> deleteOne(@PathVariable int pilotId) {
 			return service.deleteOne(pilotId);
 		} 
 		
