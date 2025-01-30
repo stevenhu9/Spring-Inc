@@ -14,14 +14,14 @@ public class PilotDTO {
 	public PilotDTO(int id, String pilotRank, int flightHoursLogged, String license, String fullName, String aircraft,
 			int commanderId, int squadronId) {
 		super();
-		this.id = id;
-		this.pilotRank = pilotRank;
-		this.flightHoursLogged = flightHoursLogged;
-		this.license = license;
-		this.fullName = fullName;
-		this.aircraft = aircraft;
-		this.commanderId = commanderId;
-		this.squadronId = squadronId;
+		this.setId(id);
+		this.setPilotRank(pilotRank);
+		this.setFlightHoursLogged(flightHoursLogged);
+		this.setLicense(license);
+		this.setFullName(fullName);
+		this.setAircraft(aircraft);
+		this.setCommanderId(commanderId);
+		this.setSquadronId(squadronId);
 	}
 
 	public int getId() {
@@ -87,11 +87,5 @@ public class PilotDTO {
 	public void setSquadronId(int squadronId) {
 		this.squadronId = squadronId;
 	}
-
-	@Override
-	public String toString() {
-		return "PilotDTO [id=" + id + ", pilotRank=" + pilotRank + ", flightHoursLogged=" + flightHoursLogged
-				+ ", license=" + license + ", fullName=" + fullName + ", aircraft=" + aircraft + ", commanderId="
-				+ commanderId + ", squadronId=" + squadronId + "]";
-	}		
+	
 }

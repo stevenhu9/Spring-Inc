@@ -25,46 +25,24 @@ public class CommanderDTO {
 		return id;
 	}
 	
-	public void setid(int id) {
-		this.id = id;
-	}
-	
 	public String getCommanderName() {
 		return commanderName;
 	}
-	public void setCommanderName(String commanderName) {
-		this.commanderName = commanderName;
-	}
+
 	public String getCommanderRank() {
 		return commanderRank;
-	}
-	public void setcommanderRank(String commanderRank) {
-		this.commanderRank = commanderRank;
 	}
 	
 	public String getSpecialization() {
 		return specialization;
 	}
-	public void setSpecialization(String specialization) {
-		this.specialization = specialization;
-	}
+
 	public int getYearsOfService() {
 		return yearsOfService;
 	}
-	public void setYearsOfService(int yearsOfService) {
-		this.yearsOfService = yearsOfService;
-	}
+
 	public byte getActiveDuty() {
 		return activeDuty;
-	}
-	public void setActiveduty(byte activeDuty) {
-		this.activeDuty = activeDuty;
-	}
-
-	@Override
-	public String toString() {
-		return "CommanderDTO [CommanderName=" + commanderName + ", rank=" + commanderRank + ", "
-				+ "specialization=" + specialization + ", yearsOfService=" + yearsOfService + ", activeDuty=" + activeDuty + "]";
 	}
 	
 }

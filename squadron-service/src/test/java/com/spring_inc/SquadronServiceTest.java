@@ -50,6 +50,7 @@ public class SquadronServiceTest {
         pilotDTO = new PilotDTO(1, "Novice", 3, "IASLDS", "Jane Doe", "F-15", 1, 2);
     }
     
+    // Test cases for findAll()
     @Test
     void testFindAll() {
         when(repo.findAll()).thenReturn(Arrays.asList(squadron));
@@ -58,7 +59,8 @@ public class SquadronServiceTest {
         assertNotNull(response.getBody());
         assertTrue(response.getBody().iterator().hasNext());
     }
-
+    
+    // Test cases for findById()
     @Test
     void testFindById() {
         when(repo.existsById(1)).thenReturn(true);
@@ -68,7 +70,7 @@ public class SquadronServiceTest {
         assertNotNull(response.getBody());
         assertEquals("Fire Squad", response.getBody().getSquadronName());
     }
-
+    
     @Test
     void testFindByIdNotFound() {
         when(repo.existsById(1)).thenReturn(false);
@@ -77,6 +79,7 @@ public class SquadronServiceTest {
         assertNull(response.getBody());
     }
 
+    // Test cases for addOne()
     @Test
     void testAddOne() {
         when(repo.save(any(Squadron.class))).thenReturn(squadron);
@@ -86,6 +89,7 @@ public class SquadronServiceTest {
         assertEquals("Fire Squad", response.getBody().getSquadronName());
     }
 
+    // Test cases for updateOne()
     @Test
     void testUpdateOne() {
         when(repo.existsById(1)).thenReturn(true);
@@ -104,15 +108,17 @@ public class SquadronServiceTest {
         assertNull(response.getBody());
     }
 
+    // Test cases for deleteOne()
     @Test
     void testDeleteOne() {
         doNothing().when(repo).deleteById(1);
         ResponseEntity<ResponseDTO> response = squadronService.deleteOne(1);
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertTrue(response.getBody().isSuccess());
     }
 
+    // Test cases for deleteOneWithReplacement()
     @Test
     void testDeleteOneWithReplacement() {
         doNothing().when(repo).deleteById(1);
@@ -131,6 +137,7 @@ public class SquadronServiceTest {
         assertFalse(response.getBody().isSuccess());
     }
 
+    // Test cases for getCommander()
     @Test
     void testGetCommander() {
         when(repo.existsById(1)).thenReturn(true);
@@ -150,6 +157,7 @@ public class SquadronServiceTest {
         assertNull(response.getBody());
     }
 
+    // Test cases for getPilot()
     @Test
     void testGetPilot() {
         when(repo.existsById(1)).thenReturn(true);
@@ -168,6 +176,7 @@ public class SquadronServiceTest {
         assertNull(response.getBody());
     }
 
+    // Test cases for addPilot()
     @Test
     void testAddPilot() {
         when(repo.checkCapacity(1)).thenReturn(5);

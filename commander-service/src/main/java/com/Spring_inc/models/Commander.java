@@ -99,14 +99,6 @@ public class Commander {
 
 	public void setActiveDuty(String activeDuty) {
 		this.activeDuty= activeDuty;
-	}
-
-	@Override
-	public String toString() {
-		return "Commander [CommanderId=" + commanderId + ", CommanderName=" + fullName + ", Rank=" + commanderRank
-				+ ", yearsOfService=" + yearsOfService + ", Specialization=" + specialization + ", ActiveDutyy=" + activeDuty + ","
-						+ "]";
-	}
-	
+	}	
 	
 }

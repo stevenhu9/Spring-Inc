@@ -51,10 +51,4 @@ public class CommanderDTO {
 		this.activeDuty = activeDuty;
 	}
 
-	@Override
-	public String toString() {
-		return "CommanderDTO [CommanderName=" + commanderName + ", rank=" + commanderRank + ", "
-				+ "specialization=" + specialization + ", yearsOfService=" + yearsOfService + ", activeDuty=" + activeDuty + "]";
-	}
-	
 }

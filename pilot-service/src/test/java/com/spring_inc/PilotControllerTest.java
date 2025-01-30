@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import com.spring_inc.api.SquadronClient;
 import com.spring_inc.controllers.PilotController;
 import com.spring_inc.dtos.PilotDTO;
-import com.spring_inc.dtos.ResponseDTO;
 import com.spring_inc.models.Pilot;
 import com.spring_inc.services.PilotService;
 
@@ -119,15 +118,15 @@ public class PilotControllerTest {
     // Test cases for deleteOne()
     @Test
     void testDeleteOne_Success() {
-        when(service.deleteOne(1)).thenReturn(ResponseEntity.ok().build());
-        ResponseEntity<ResponseDTO> response = controller.deleteOne(1);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        when(service.deleteOne(1)).thenReturn(ResponseEntity.noContent().build());
+        ResponseEntity<Void> response = controller.deleteOne(1);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
     @Test
     void testDeleteOne_Failure() {
-        when(service.deleteOne(1)).thenReturn(ResponseEntity.status(HttpStatus.CONFLICT).build());
-        ResponseEntity<ResponseDTO> response = controller.deleteOne(1);
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        when(service.deleteOne(1)).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        ResponseEntity<Void> response = controller.deleteOne(1);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

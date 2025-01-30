@@ -62,14 +62,6 @@ public class Squadron {
 		this.commanderId = commanderId;
 	}
 
-	public int getSquadronId() {
-		return squadronId;
-	}
-
-	public void setSquadronId(int squadronId) {
-		this.squadronId = squadronId;
-	}
-
 	public String getSquadronName() {
 		return squadronName;
 	}
@@ -78,59 +70,12 @@ public class Squadron {
 		this.squadronName = squadronName;
 	}
 
-	public String getBase() {
-		return base;
-	}
-
-	public void setBase(String base) {
-		this.base = base;
-	}
-
-	public java.sql.Timestamp getDateFormed() {
-		return dateFormed;
-	}
-
-	public void setDateFormed(java.sql.Timestamp dateFormed) {
-		this.dateFormed = dateFormed;
-	}
-
-	public String getMission() {
-		return mission;
-	}
-
-	public void setMission(String mission) {
-		this.mission = mission;
-	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public int getCommanderId() {
 		return commanderId;
 	}
 
 	public void setCommanderId(int commanderId) {
 		this.commanderId = commanderId;
-	}
-
-	@Override
-	public String toString() {
-		return "Squadron [squadronId=" + squadronId + ", squadronName=" + squadronName + ", base=" + base
-				+ ", dateFormed=" + dateFormed + ", mission=" + mission + ", capacity=" + capacity + ", status="
-				+ status + "]";
 	}
 	
 	

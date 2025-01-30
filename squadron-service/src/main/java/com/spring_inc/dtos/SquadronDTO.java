@@ -62,22 +62,12 @@ public class SquadronDTO {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "SquadronDTO [squadronName=" + squadronName + ", base=" + base + ", dateFormed=" + dateFormed
-				+ ", mission=" + mission + ", capacity=" + capacity + ", status=" + status + "]";
-	}
-
 	public int getCommanderId() {
 		return commanderId;
 	}
 
 	public void setCommanderId(int commanderId) {
 		this.commanderId = commanderId;
-	}
-
-	
-	
-	
+	}	
 	
 }
