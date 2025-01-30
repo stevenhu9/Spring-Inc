@@ -9,6 +9,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${DB_HIBERNATE_DDL}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs/commander
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 server:
  port: 8082
  

@@ -1,33 +1,44 @@
 package com.Spring_inc;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SwaggerConfig {
+public class OpenApiGatewayConfig {
 
     @Bean
-    public GroupedOpenApi squadronServiceApi() {
-        return GroupedOpenApi.builder()
-            .group("Squadron Service")
-            .pathsToMatch("/squadron-service/**")
-            .build();
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("API Gateway - Aggregated Swagger Docs")
+                        .version("1.0")
+                        .description("Aggregated API documentation for all microservices"));
     }
 
     @Bean
-    public GroupedOpenApi pilotServiceApi() {
+    public GroupedOpenApi squadronApi() {
         return GroupedOpenApi.builder()
-            .group("Pilot Service")
-            .pathsToMatch("/pilot-service/**")
-            .build();
+                .group("squadron-service")
+                .pathsToMatch("/squadron-service/**")
+                .build();
     }
 
     @Bean
-    public GroupedOpenApi commanderServiceApi() {
+    public GroupedOpenApi pilotApi() {
         return GroupedOpenApi.builder()
-            .group("Commander Service")
-            .pathsToMatch("/commander-service/**")
-            .build();
+                .group("pilot-service")
+                .pathsToMatch("/pilot-service/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi commanderApi() {
+        return GroupedOpenApi.builder()
+                .group("commander-service")
+                .pathsToMatch("/commander-service/**")
+                .build();
     }
 }

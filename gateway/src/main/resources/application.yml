@@ -6,49 +6,58 @@ spring:
     gateway:
       routes:
       - id: squadron-service-route
-        uri: lb://squadron-service
+        uri: http://localhost:8081
         predicates:
-        - Path=/squadron/**
+        - Path=/squadron-service/**
 
       - id: commander-service-route
-        uri: lb://commander-service
+        uri: http://localhost:8082
         predicates:
-        - Path=/commander/**
+        - Path=/commander-service/**
 
       - id: pilot-service-route
-        uri: lb://pilot-service
+        uri: http://localhost:8083
         predicates:
-        - Path=/pilot/**
+        - Path=/pilot-service/**
 
       - id: swagger-ui-squadron
-        uri: lb://squadron-service
+        uri: http://localhost:8081
         predicates:
         - Path=/swagger-ui/**
 
       - id: swagger-ui-commander
-        uri: lb://commander-service
+        uri: http://localhost:8082
         predicates:
         - Path=/swagger-ui/**
 
       - id: swagger-ui-pilot
-        uri: lb://pilot-service
+        uri: http://localhost:8083
         predicates:
         - Path=/swagger-ui/**
 
       - id: api-docs-squadron
-        uri: lb://squadron-service
+        uri: http://localhost:8081
         predicates:
-        - Path=/v3/api-docs/**
+        - Path=/v3/api-docs/squadron
 
       - id: api-docs-commander
-        uri: lb://commander-service
+        uri: http://localhost:8082
         predicates:
-        - Path=/v3/api-docs/**
+        - Path=/v3/api-docs/commander
 
       - id: api-docs-pilot
-        uri: lb://pilot-service
+        uri: http://localhost:8083
         predicates:
-        - Path=/v3/api-docs/**
+        - Path=/v3/api-docs/pilot
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    url: http://localhost:9000/v3/api-docs/squadron, http://localhost:9000/v3/api-docs/pilot, http://localhost:9000/v3/api-docs/commander
+
 server:
   port: 9000
 
