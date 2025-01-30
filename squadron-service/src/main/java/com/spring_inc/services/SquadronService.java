@@ -109,7 +109,7 @@ public class SquadronService {
 	// add a pilot to the squadron, returns string to user letting them know if it worked
 	public ResponseEntity<ResponseDTO> addPilot(int pilotid, int squadronid) {
 		int currentcapacity = repo.checkCapacity(squadronid);
-		if(currentcapacity <= 7) {
+		if(currentcapacity <= 8) {
 			repo.addPilot(squadronid, pilotid);
 			ResponseDTO response = new ResponseDTO("Pilot has been added to the squad", true);
 			return ResponseEntity.status(HttpStatus.OK).body(response);

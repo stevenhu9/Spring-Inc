@@ -54,12 +54,14 @@ public class PilotService {
 	// Delete existing pilot
 	public ResponseEntity<ResponseDTO> deleteOne(int pilotId) {
 		try {
+		int squad = repo.getSquadron(pilotId);
+		repo.removePilot(squad);
 		repo.deleteById(pilotId);
 		ResponseDTO response = new ResponseDTO("The Pilot has been deleted", true);
 		return ResponseEntity.status(HttpStatus.OK)
 							 .body(response);
 		}catch(Exception e) {
-			ResponseDTO response = new ResponseDTO("The Pilot could not be deleted", false);
+			ResponseDTO response = new ResponseDTO("The Pilot could not be deleted: " + e, false);
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 								 .body(response);
 		}

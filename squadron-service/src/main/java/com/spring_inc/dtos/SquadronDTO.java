@@ -24,7 +24,7 @@ public class SquadronDTO {
 		this.status = status;
 		this.commanderId = commanderId;
 	}
-	
+
 	public String getSquadronName() {
 		return squadronName;
 	}
